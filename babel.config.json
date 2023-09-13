@@ -1,0 +1,51 @@
+{
+  "env": {
+    "test": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "node": "current"
+            }
+          }
+        ]
+      ],
+      "plugins": ["wildcard"]
+    },
+    "resolveImportAll": {
+      "plugins": ["wildcard"]
+    },
+    "buildCommonJS": {
+      "presets": ["@babel/preset-env"],
+      "plugins": [
+        [
+          "@babel/plugin-transform-runtime",
+          {
+            "corejs": 3
+          }
+        ]
+      ]
+    },
+    "buildESmodules": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "esmodules": true
+            }
+          }
+        ]
+      ],
+      "plugins": [
+        [
+          "@babel/plugin-transform-runtime",
+          {
+            "corejs": 3
+          }
+        ]
+      ]
+    }
+  }
+}
