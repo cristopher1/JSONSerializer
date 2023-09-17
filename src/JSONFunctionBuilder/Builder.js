@@ -20,12 +20,12 @@ export class Builder {
     this.#serializerHandler = serializerHandler
   }
 
-  get serializerHandler() {
+  getSerializerHandler() {
     return this.#serializerHandler
   }
 
-  get savedSerializers() {
+  getSavedSerializers() {
     const serializerHandler = this.#serializerHandler
-    return serializerHandler.savedSerializers
+    return serializerHandler.getSavedSerializers()
   }
 }
