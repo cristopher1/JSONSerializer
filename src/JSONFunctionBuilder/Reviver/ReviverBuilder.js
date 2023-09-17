@@ -6,17 +6,17 @@ export class ReviverBuilder extends Builder {
     super(serializerHandler, ReviverBuilderSerializerHandlerError)
   }
 
-  get savedSerializers() {
-    return super.savedSerializers
+  getSavedSerializers() {
+    return super.getSavedSerializers()
   }
 
   addSerializer(serializerType, serializer) {
-    const serializerHandler = super.serializerHandler
+    const serializerHandler = super.getSerializerHandler()
     serializerHandler.addSerializer(serializerType, serializer)
   }
 
-  getReviver() {
-    const serializerHandler = super.serializerHandler
+  build() {
+    const serializerHandler = super.getSerializerHandler()
     const serializers = serializerHandler.serializers
 
     return function reviver(key, value) {
