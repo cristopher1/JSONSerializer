@@ -10,11 +10,11 @@ export class SerializerHandler {
     this.#serializers = {}
   }
 
-  get serializers() {
+  getSerializers() {
     return this.#serializers
   }
 
-  get savedSerializers() {
+  getSavedSerializers() {
     const serializers = this.#serializers
     return { ...serializers }
   }
