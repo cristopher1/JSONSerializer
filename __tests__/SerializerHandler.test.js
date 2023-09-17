@@ -27,7 +27,7 @@ describe(`class SerializerHandler (${filePath})`, () => {
       const expected = {}
 
       // Act
-      const result = serializerHandler.serializers
+      const result = serializerHandler.getSerializers()
 
       // Assert
       expect(result).toEqual(expected)
@@ -49,7 +49,7 @@ describe(`class SerializerHandler (${filePath})`, () => {
       serializerHandler.addSerializer(serializerTypeDate, serializerDate)
 
       // Act
-      const result = serializerHandler.serializers
+      const result = serializerHandler.getSerializers()
 
       // Assert
       expect(result).toEqual(expected)
@@ -61,7 +61,7 @@ describe(`class SerializerHandler (${filePath})`, () => {
       const expected = {}
 
       // Act
-      const result = serializerHandler.savedSerializers
+      const result = serializerHandler.getSavedSerializers()
 
       // Assert
       expect(result).toEqual(expected)
@@ -83,7 +83,7 @@ describe(`class SerializerHandler (${filePath})`, () => {
       serializerHandler.addSerializer(serializerTypeDate, serializerDate)
 
       // Act
-      const result = serializerHandler.savedSerializers
+      const result = serializerHandler.getSavedSerializers()
 
       // Assert
       expect(result).toEqual(expected)
@@ -113,7 +113,7 @@ describe(`class SerializerHandler (${filePath})`, () => {
         serializerHandler.addSerializer(serializerType, expected)
 
         // Assert
-        const serializers = serializerHandler.serializers
+        const serializers = serializerHandler.getSerializers()
         const result = serializers[serializerType]
 
         expect(result).toEqual(expected)
@@ -130,7 +130,7 @@ describe(`class SerializerHandler (${filePath})`, () => {
         serializerHandler.addSerializer(serializerType, expected)
 
         // Assert
-        const serializers = serializerHandler.serializers
+        const serializers = serializerHandler.getSerializers()
         const result = serializers[serializerType]
 
         expect(result).toEqual(expected)

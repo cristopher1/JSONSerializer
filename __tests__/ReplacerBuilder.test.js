@@ -74,7 +74,7 @@ describe(`class ReviverBuilder (${filePath})`, () => {
       replacerBuilder.addSerializer(serializerTypeDate, serializerDate)
 
       // Act
-      const result = replacerBuilder.savedSerializers
+      const result = replacerBuilder.getSavedSerializers()
 
       // Assert
       expect(result).toEqual(expected)
@@ -106,7 +106,7 @@ describe(`class ReviverBuilder (${filePath})`, () => {
         replacerBuilder.addSerializer(serializerType, serializer)
 
         // Assert
-        const result = replacerBuilder.savedSerializers
+        const result = replacerBuilder.getSavedSerializers()
         expect(result).toEqual(expected)
       })
       it('Should throw a SerializerHandlerSerializerError, if serializer.parse is not a function', () => {
@@ -123,7 +123,7 @@ describe(`class ReviverBuilder (${filePath})`, () => {
         replacerBuilder.addSerializer(serializerType, newSerializer)
 
         // Assert
-        const result = replacerBuilder.savedSerializers
+        const result = replacerBuilder.getSavedSerializers()
         expect(result).toEqual(expected)
       })
     })
@@ -191,13 +191,13 @@ describe(`class ReviverBuilder (${filePath})`, () => {
       })
     })
   })
-  describe('(method) getReplacer', () => {
+  describe('(method) build', () => {
     it('Should return a function', () => {
       // Arrange
       const expected = 'function'
 
       // Act
-      const result = replacerBuilder.getReplacer()
+      const result = replacerBuilder.build()
 
       // Assert
       expect(typeof result).toBe(expected)
