@@ -1,23 +1,12 @@
-import { ReplacerBuilderSerializerHandlerError } from '../Error'
-import { Builder } from '../Builder'
+export class ReplacerBuilder {
+  #serializers
 
-export class ReplacerBuilder extends Builder {
-  constructor(serializerHandler) {
-    super(serializerHandler, ReplacerBuilderSerializerHandlerError)
-  }
-
-  getSavedSerializers() {
-    return super.getSavedSerializers()
-  }
-
-  addSerializer(serializerType, serializer) {
-    const serializerHandler = super.getSerializerHandler()
-    serializerHandler.addSerializer(serializerType, serializer)
+  addSerializers(serializers) {
+    this.#serializers = serializers
   }
 
   build() {
-    const serializerHandler = super.getSerializerHandler()
-    const serializers = serializerHandler.serializers
+    const serializers = this.#serializers
     const getSerializerType = (dataType) => {
       const type = typeof dataType
       return type === 'object' ? dataType.constructor.name.toLowerCase() : type

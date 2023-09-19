@@ -1,23 +1,12 @@
-import { ReviverBuilderSerializerHandlerError } from '../Error'
-import { Builder } from '../Builder'
+export class ReviverBuilder {
+  #serializers
 
-export class ReviverBuilder extends Builder {
-  constructor(serializerHandler) {
-    super(serializerHandler, ReviverBuilderSerializerHandlerError)
-  }
-
-  getSavedSerializers() {
-    return super.getSavedSerializers()
-  }
-
-  addSerializer(serializerType, serializer) {
-    const serializerHandler = super.getSerializerHandler()
-    serializerHandler.addSerializer(serializerType, serializer)
+  addSerializers(serializers) {
+    this.#serializers = serializers
   }
 
   build() {
-    const serializerHandler = super.getSerializerHandler()
-    const serializers = serializerHandler.serializers
+    const serializers = this.#serializers
 
     return function reviver(key, value) {
       const dataType = '__typeof__'
