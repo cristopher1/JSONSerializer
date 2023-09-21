@@ -55,8 +55,11 @@ export class JSONSerializer {
     return serializerHandler.getSerializers()
   }
 
-  installSerializersAndRefreshJsonSerializer(serializers, installOptions = {}) {
-    this.#installSerializers(serializers, installOptions)
+  installSerializersAndRefreshJsonSerializer(
+    serializersInstaller,
+    installOptions = {},
+  ) {
+    this.#installSerializers(serializersInstaller, installOptions)
     this.#refreshJsonSerializer()
   }
 
