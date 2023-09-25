@@ -1,16 +1,31 @@
-import { SerializerValidator } from './Validator/SerializerValidator'
-import { ReplacerBuilder } from './JSONFunctionBuilder/Replacer/ReplacerBuilder'
-import { ReviverBuilder } from './JSONFunctionBuilder/Reviver/ReviverBuilder'
+import { ValidatorHandler } from './ValidatorHandler/ValidatorHandler'
+import { ContainsPropertyValidator } from './Validator/ContainsPropertyValidator'
+import { PropertyContainsValidTypeValidator } from './Validator/PropertyContainsValidTypeValidator'
+import { IsTypeValidator } from './Validator/IsTypeValidator'
+import { ReplacerBuilder } from './JsonFunctionBuilder/Replacer/ReplacerBuilder'
+import { ReviverBuilder } from './JsonFunctionBuilder/Reviver/ReviverBuilder'
 import { SerializerHandler } from './SerializerHandler/SerializerHandler'
-import { JSONSerializer } from './core/JSONSerializer'
+import { JsonSerializer } from './core/JsonSerializer'
 
-const serializerValidator = new SerializerValidator()
-const serializerHandler = new SerializerHandler(serializerValidator)
-const replacerBuilder = new ReplacerBuilder()
-const reviverBuilder = new ReviverBuilder()
+export function buildJsonSerializer() {
+  const serializerValidators = [
+    new PropertyContainsValidTypeValidator(
+      new ContainsPropertyValidator('getSerializerType'),
+      new IsTypeValidator('function'),
+    ),
+    new PropertyContainsValidTypeValidator(
+      new ContainsPropertyValidator('serialize'),
+      new IsTypeValidator('function'),
+    ),
+    new PropertyContainsValidTypeValidator(
+      new ContainsPropertyValidator('parse'),
+      new IsTypeValidator('function'),
+    ),
+  ]
 
-export default new JSONSerializer(
-  replacerBuilder,
-  reviverBuilder,
-  serializerHandler,
-)
+  return new JsonSerializer(
+    new ReplacerBuilder(),
+    new ReviverBuilder(),
+    new SerializerHandler(new ValidatorHandler(serializerValidators)),
+  )
+}
