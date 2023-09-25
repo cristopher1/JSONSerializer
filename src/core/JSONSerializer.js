@@ -1,4 +1,4 @@
-export class JSONSerializer {
+export class JsonSerializer {
   #replacerBuilder
   #reviverBuilder
   #serializerHandler
