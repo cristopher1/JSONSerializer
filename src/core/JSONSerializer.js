@@ -45,9 +45,8 @@ export class JSONSerializer {
 
   #addSerializer(serializer) {
     const serializerHandler = this.#serializerHandler
-    const { serializerType } = serializer
 
-    serializerHandler.addSerializer(serializerType, serializer)
+    serializerHandler.addSerializer(serializer)
   }
 
   getSerializers() {
