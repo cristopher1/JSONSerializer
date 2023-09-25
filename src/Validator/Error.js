@@ -1,2 +1,12 @@
-export class SerializerHandlerSerializerTypeError extends Error {}
-export class SerializerHandlerSerializerError extends Error {}
+export class ValidatorError extends Error {
+  #name
+
+  constructor(name, message) {
+    super(message)
+    this.#name = name
+  }
+
+  getName() {
+    return this.#name
+  }
+}
