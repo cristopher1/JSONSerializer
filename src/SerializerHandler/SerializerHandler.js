@@ -1,10 +1,10 @@
 export class SerializerHandler {
   #serializers
-  #serializerValidator
+  #serializerValidatorHandler
 
-  constructor(serializerValidator) {
+  constructor(serializerValidatorHandler) {
     this.#serializers = {}
-    this.#serializerValidator = serializerValidator
+    this.#serializerValidatorHandler = serializerValidatorHandler
   }
 
   getSerializers() {
@@ -12,15 +12,10 @@ export class SerializerHandler {
     return { ...serializers }
   }
 
-  #validate(serializerType, serializer) {
-    const serializerValidator = this.#serializerValidator
+  addSerializer(serializer) {
+    this.#serializerValidatorHandler.validate(serializer)
 
-    serializerValidator.validateSerializerType(serializerType)
-    serializerValidator.validateSerializer(serializer)
-  }
-
-  addSerializer(serializerType, serializer) {
-    this.#validate(serializerType, serializer)
+    const serializerType = serializer.getSerializerType()
     this.#serializers[serializerType] = serializer
   }
 }
