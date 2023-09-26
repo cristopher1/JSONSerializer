@@ -1,7 +1,7 @@
 export class ReplacerBuilder {
   #serializers
 
-  addSerializers(serializers) {
+  setSerializers(serializers) {
     this.#serializers = serializers
   }
 

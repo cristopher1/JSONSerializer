@@ -26,14 +26,14 @@ export class JsonSerializer {
   #refreshReplacer(serializers) {
     const replacerBuilder = this.#replacerBuilder
 
-    replacerBuilder.addSerializers(serializers)
+    replacerBuilder.setSerializers(serializers)
     this.#replacer = replacerBuilder.build()
   }
 
   #refreshReviver(serializers) {
     const reviverBuilder = this.#reviverBuilder
 
-    reviverBuilder.addSerializers(serializers)
+    reviverBuilder.setSerializers(serializers)
     this.#reviver = reviverBuilder.build()
   }
 
