@@ -7,18 +7,21 @@ export class ReplacerBuilder {
 
   build() {
     const serializers = this.#serializers
-    const getSerializerType = (dataType) => {
-      const type = typeof dataType
-      return type === 'object' ? dataType.constructor.name.toLowerCase() : type
+    const getSerializerType = (unserializedData) => {
+      const type = typeof unserializedData
+      return type === 'object' ? unserializedData.constructor.name : type
     }
 
     return function replacer(key, value) {
       const unserializedData = this[key]
-      const dataType = unserializedData.__typeof__
-      const serializerType = getSerializerType(dataType)
+      const serializerType = getSerializerType(unserializedData)
       const serializer = serializers[serializerType]
       if (serializer) {
-        return serializer.serialize(unserializedData)
+        const serializedData = serializer.serialize(unserializedData)
+        return {
+          __typeof__: serializerType,
+          ...serializedData,
+        }
       }
       // Using serialized data by JSON.stringify algorithm
       return value
