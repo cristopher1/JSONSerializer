@@ -9,8 +9,7 @@ export class ReviverBuilder {
     const serializers = this.#serializers
 
     return function reviver(key, value) {
-      const dataType = '__typeof__'
-      const serializerType = value[dataType]
+      const serializerType = value.__typeof__
       const serializer = serializers[serializerType]
       if (serializer) {
         return serializer.parse(value)
