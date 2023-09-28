@@ -1,30 +1,38 @@
-import {
-  SerializerHandlerSerializerTypeError,
-  SerializerHandlerSerializerError,
-} from '../src/SerializerHandler/Error'
-import { getSerializerHandler, getSerializer } from './helpers'
+import { ValidatorHandler } from '../src/ValidatorHandler/ValidatorHandler'
+import { PropertyContainsValidTypeValidator } from '../src/Validator/PropertyContainsValidTypeValidator'
+import { ContainsPropertyValidator } from '../src/Validator/ContainsPropertyValidator'
+import { IsTypeValidator } from '../src/Validator/IsTypeValidator'
+import { ValidatorError } from '../src/Validator/Error'
+import { getSerializer, getSerializerHandler } from './helpers'
 
 const filePath = 'src/SerializerHandler/SerializerHandler.js'
 
 describe(`class SerializerHandler (${filePath})`, () => {
   describe('constructor', () => {
-    it('Should not throw any Error, when the constructor is called', () => {
+    it('Should create a SerializerHandler using constructor without parameters', () => {
       // Act
       const result = () => getSerializerHandler()
 
-      // Arrange
+      // Assert
+      expect(result).not.toThrow()
+    })
+    it('Should create a SerializerHandler using constructor with a ValidatorHandler object', () => {
+      // Arrage
+      const validators = []
+      const serializerValidatorHandler = new ValidatorHandler(validators)
+
+      // Act
+      const result = () => getSerializerHandler(serializerValidatorHandler)
+
+      // Assert
       expect(result).not.toThrow()
     })
   })
-  let serializerHandler
-
-  beforeEach(() => {
-    serializerHandler = getSerializerHandler()
-  })
-  describe('(getter) serializers', () => {
-    it('Should return an empty object, when there is not serializers saved', () => {
+  describe('(method) getSerializers', () => {
+    it('Should return an empty object when there is not saved serializers', () => {
       // Arrange
       const expected = {}
+      const serializerHandler = getSerializerHandler()
 
       // Act
       const result = serializerHandler.getSerializers()
@@ -32,173 +40,82 @@ describe(`class SerializerHandler (${filePath})`, () => {
       // Assert
       expect(result).toEqual(expected)
     })
-    it('Should return a object that contains the serializers, when there is serializers saved', () => {
+    it('Should return an object with the saved serializers', () => {
       // Arrange
-      const serializerTypeFunction = 'function'
-      const serializerTypeDate = 'date'
-      const serializerFunction = getSerializer()
-      const serializerDate = getSerializer()
-      const expected = {}
-      expected[serializerTypeFunction] = serializerFunction
-      expected[serializerTypeDate] = serializerDate
-
-      serializerHandler.addSerializer(
-        serializerTypeFunction,
-        serializerFunction,
+      const functionSerializer = getSerializer(
+        () => 'function',
+        (value) => value.toString(),
+        (value) => value,
       )
-      serializerHandler.addSerializer(serializerTypeDate, serializerDate)
+      const expected = {
+        function: functionSerializer,
+      }
+      const serializerHandler = getSerializerHandler()
+      serializerHandler.addSerializer(functionSerializer)
 
       // Act
       const result = serializerHandler.getSerializers()
-
-      // Assert
-      expect(result).toEqual(expected)
-    })
-  })
-  describe('(getter) savedSerializers', () => {
-    it('Should return an empty object, when there is not serializers saved', () => {
-      // Arrange
-      const expected = {}
-
-      // Act
-      const result = serializerHandler.getSavedSerializers()
-
-      // Assert
-      expect(result).toEqual(expected)
-    })
-    it('Should return a object that contains the serializers, when there is serializers saved', () => {
-      // Assert
-      const serializerTypeFunction = 'function'
-      const serializerTypeDate = 'date'
-      const serializerFunction = getSerializer()
-      const serializerDate = getSerializer()
-      const expected = {}
-      expected[serializerTypeFunction] = serializerFunction
-      expected[serializerTypeDate] = serializerDate
-
-      serializerHandler.addSerializer(
-        serializerTypeFunction,
-        serializerFunction,
-      )
-      serializerHandler.addSerializer(serializerTypeDate, serializerDate)
-
-      // Act
-      const result = serializerHandler.getSavedSerializers()
 
       // Assert
       expect(result).toEqual(expected)
     })
   })
   describe('(method) addSerializer', () => {
-    it('Should throw a SerializerHandlerSerializerTypeError, if serializerType is not an String', () => {
+    it('Should add serializers when there are not validators', () => {
       // Arrange
-      const serializerType = {}
-      const serializer = getSerializer()
-      const expected = SerializerHandlerSerializerTypeError
+      const functionSerializer = getSerializer(
+        () => 'function',
+        (value) => value.toString(),
+        (value) => value,
+      )
+      const bigIntSerializer = getSerializer(
+        () => 'bigint',
+        (value) => value.toString(),
+        (value) => value,
+      )
+      const expected = {
+        function: functionSerializer,
+        bigint: bigIntSerializer,
+      }
+      const serializerHandler = getSerializerHandler()
 
       // Act
-      const result = () =>
-        serializerHandler.addSerializer(serializerType, serializer)
+      serializerHandler.addSerializer(functionSerializer)
+      serializerHandler.addSerializer(bigIntSerializer)
 
       // Assert
-      expect(result).toThrow(expected)
+      const result = serializerHandler.getSerializers()
+      expect(result).toEqual(expected)
     })
-    describe('when serializerType is a string', () => {
-      it('Should add a new serializer', () => {
-        // Arrange
-        const serializerType = 'function'
-        const expected = getSerializer()
+    it('Should not add serializers when they do not pass the validation', () => {
+      // Arrange
+      const serializerValidators = [
+        new PropertyContainsValidTypeValidator(
+          new ContainsPropertyValidator('getSerializerType'),
+          new IsTypeValidator('function'),
+        ),
+        new PropertyContainsValidTypeValidator(
+          new ContainsPropertyValidator('serialize'),
+          new IsTypeValidator('function'),
+        ),
+        new PropertyContainsValidTypeValidator(
+          new ContainsPropertyValidator('parse'),
+          new IsTypeValidator('function'),
+        ),
+      ]
+      const validatorHandler = new ValidatorHandler(serializerValidators)
+      const serializerHandler = getSerializerHandler(validatorHandler)
 
-        // Act
-        serializerHandler.addSerializer(serializerType, expected)
+      const serializer = getSerializer(
+        () => 'function',
+        (value) => value.toString(),
+      )
 
-        // Assert
-        const serializers = serializerHandler.getSerializers()
-        const result = serializers[serializerType]
+      // Act
+      const result = () => serializerHandler.addSerializer(serializer)
 
-        expect(result).toEqual(expected)
-      })
-      it('Should override a serializer, when to use the same serializerType', () => {
-        // Arrange
-        const serializerType = 'date'
-        const expected = getSerializer()
-        const serializer = { ...expected, getKey: (value) => value }
-
-        serializerHandler.addSerializer(serializerType, serializer)
-
-        // Act
-        serializerHandler.addSerializer(serializerType, expected)
-
-        // Assert
-        const serializers = serializerHandler.getSerializers()
-        const result = serializers[serializerType]
-
-        expect(result).toEqual(expected)
-      })
-    })
-    describe('when the serializer object does not have the expected interface', () => {
-      it('Should throw a SerializerHandlerSerializerError, if serializer does not contain a serialize property', () => {
-        // Arrange
-        const serializerType = 'function'
-        const serializer = {
-          parse: (value) => value,
-        }
-        const expected = SerializerHandlerSerializerError
-
-        // Act
-        const result = () =>
-          serializerHandler.addSerializer(serializerType, serializer)
-
-        // Assert
-        expect(result).toThrow(expected)
-      })
-      it('Should throw a SerializerHandlerSerializerError, if serializer.serialize is not a function', () => {
-        // Arrange
-        const serializerType = 'date'
-        const serializer = {
-          serialize: {},
-          parse: (value) => ({ value }),
-        }
-        const expected = SerializerHandlerSerializerError
-
-        // Act
-        const result = () =>
-          serializerHandler.addSerializer(serializerType, serializer)
-
-        // Assert
-        expect(result).toThrow(expected)
-      })
-      it('Should throw a SerializerHandlerSerializerError, if serializer does not contain a parse property', () => {
-        // Arrange
-        const serializerType = 'date'
-        const serializer = {
-          serialize: (value) => value,
-        }
-        const expected = SerializerHandlerSerializerError
-
-        // Act
-        const result = () =>
-          serializerHandler.addSerializer(serializerType, serializer)
-
-        // Assert
-        expect(result).toThrow(expected)
-      })
-      it('Should throw a SerializerHandlerSerializerError, if serializer.parse is not a function', () => {
-        // Arrange
-        const serializerType = 'function'
-        const serializer = {
-          serialize: (value) => value,
-          parse: [1, 2, 3, 4, 5, 6, 7],
-        }
-        const expected = SerializerHandlerSerializerError
-
-        // Act
-        const result = () =>
-          serializerHandler.addSerializer(serializerType, serializer)
-
-        // Assert
-        expect(result).toThrow(expected)
-      })
+      // Assert
+      expect(result).toThrow(ValidatorError)
     })
   })
 })
