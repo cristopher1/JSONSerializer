@@ -5,7 +5,7 @@ import { IsTypeValidator } from './Validator/IsTypeValidator'
 import { ReplacerBuilder } from './JsonFunctionBuilder/Replacer/ReplacerBuilder'
 import { ReviverBuilder } from './JsonFunctionBuilder/Reviver/ReviverBuilder'
 import { SerializerHandler } from './SerializerHandler/SerializerHandler'
-import { JsonSerializer } from './core/JsonSerializer'
+import { JsonSerializer } from './core/JSONSerializer'
 
 export function buildJsonSerializer() {
   const serializerValidators = [
