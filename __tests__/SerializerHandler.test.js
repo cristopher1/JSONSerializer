@@ -61,63 +61,95 @@ describe(`class SerializerHandler (${filePath})`, () => {
     })
   })
   describe('(method) addSerializer', () => {
-    it('Should add serializers when there are not validators', () => {
-      // Arrange
-      const functionSerializer = getSerializer(
-        () => 'function',
-        (value) => value.toString(),
-        (value) => value,
-      )
-      const bigIntSerializer = getSerializer(
-        () => 'bigint',
-        (value) => value.toString(),
-        (value) => value,
-      )
-      const expected = {
-        function: functionSerializer,
-        bigint: bigIntSerializer,
-      }
-      const serializerHandler = getSerializerHandler()
+    describe('When SerializerHandler does not have validators', () => {
+      it('Should add serializers', () => {
+        // Arrange
+        const functionSerializer = getSerializer(
+          () => 'function',
+          (value) => value.toString(),
+          (value) => value,
+        )
+        const bigIntSerializer = getSerializer(
+          () => 'bigint',
+          (value) => value.toString(),
+          (value) => value,
+        )
+        const expected = {
+          function: functionSerializer,
+          bigint: bigIntSerializer,
+        }
+        const serializerHandler = getSerializerHandler()
 
-      // Act
-      serializerHandler.addSerializer(functionSerializer)
-      serializerHandler.addSerializer(bigIntSerializer)
+        // Act
+        serializerHandler.addSerializer(functionSerializer)
+        serializerHandler.addSerializer(bigIntSerializer)
 
-      // Assert
-      const result = serializerHandler.getSerializers()
-      expect(result).toEqual(expected)
+        // Assert
+        const result = serializerHandler.getSerializers()
+        expect(result).toEqual(expected)
+      })
     })
-    it('Should not add serializers when they do not pass the validation', () => {
-      // Arrange
-      const expected = ValidatorError
+    describe('When SerializerHandler has validators', () => {
+      let serializerHandler
 
-      const serializerValidators = [
-        new PropertyContainsValidTypeValidator(
-          new ContainsPropertyValidator('getSerializerType'),
-          new IsTypeValidator('function'),
-        ),
-        new PropertyContainsValidTypeValidator(
-          new ContainsPropertyValidator('serialize'),
-          new IsTypeValidator('function'),
-        ),
-        new PropertyContainsValidTypeValidator(
-          new ContainsPropertyValidator('parse'),
-          new IsTypeValidator('function'),
-        ),
-      ]
-      const validatorHandler = new ValidatorHandler(serializerValidators)
-      const serializerHandler = getSerializerHandler(validatorHandler)
+      beforeEach(() => {
+        const serializerValidators = [
+          new PropertyContainsValidTypeValidator(
+            new ContainsPropertyValidator('getSerializerType'),
+            new IsTypeValidator('function'),
+          ),
+          new PropertyContainsValidTypeValidator(
+            new ContainsPropertyValidator('serialize'),
+            new IsTypeValidator('function'),
+          ),
+          new PropertyContainsValidTypeValidator(
+            new ContainsPropertyValidator('parse'),
+            new IsTypeValidator('function'),
+          ),
+        ]
+        const validatorHandler = new ValidatorHandler(serializerValidators)
+        serializerHandler = getSerializerHandler(validatorHandler)
+      })
+      it('Should add serializers when they are valid', () => {
+        // Arrange
+        const functionSerializer = getSerializer(
+          () => 'function',
+          (value) => value.toString(),
+          (value) => value,
+        )
+        const bigIntSerializer = getSerializer(
+          () => 'bigint',
+          (value) => value.toString(),
+          (value) => value,
+        )
+        const expected = {
+          function: functionSerializer,
+          bigint: bigIntSerializer,
+        }
 
-      const serializer = getSerializer(
-        () => 'function',
-        (value) => value.toString(),
-      )
+        // Act
+        serializerHandler.addSerializer(functionSerializer)
+        serializerHandler.addSerializer(bigIntSerializer)
 
-      // Act
-      const result = () => serializerHandler.addSerializer(serializer)
+        // Assert
+        const result = serializerHandler.getSerializers()
+        expect(result).toEqual(expected)
+      })
+      it('Should not add serializers when they are invalid', () => {
+        // Arrange
+        const expected = ValidatorError
 
-      // Assert
-      expect(result).toThrow(expected)
+        const serializer = getSerializer(
+          () => 'function',
+          (value) => value.toString(),
+        )
+
+        // Act
+        const result = () => serializerHandler.addSerializer(serializer)
+
+        // Assert
+        expect(result).toThrow(expected)
+      })
     })
   })
 })
