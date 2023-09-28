@@ -1,7 +1,7 @@
 export class ValidatorHandler {
   #validators
 
-  constructor(validators) {
+  constructor(validators = []) {
     this.#validators = validators
   }
 
