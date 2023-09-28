@@ -1,6 +1,10 @@
 export class ReplacerBuilder {
   #serializers
 
+  constructor() {
+    this.#serializers = {}
+  }
+
   setSerializers(serializers) {
     this.#serializers = serializers
   }

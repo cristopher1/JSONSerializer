@@ -1,6 +1,10 @@
 export class ReviverBuilder {
   #serializers
 
+  constructor() {
+    this.#serializers = {}
+  }
+
   setSerializers(serializers) {
     this.#serializers = serializers
   }
