@@ -11,8 +11,6 @@ export class JsonSerializer {
     this.#replacerBuilder = replacerBuilder
     this.#reviverBuilder = reviverBuilder
     this.#serializerHandler = serializerHandler
-    this.#replacer = replacerBuilder.build()
-    this.#reviver = reviverBuilder.build()
   }
 
   #refreshJsonSerializer() {
