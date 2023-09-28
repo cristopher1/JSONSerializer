@@ -1,7 +1,20 @@
+import { faker } from '@faker-js/faker'
 import { SerializerHandler } from '../../src/SerializerHandler/SerializerHandler'
 
-export const getSerializerHandler = () => new SerializerHandler()
-export const getSerializer = () => ({
-  serialize: (value) => ({ value: value.toString() }),
-  parse: (value) => value,
+faker.seed(27)
+
+export const getSerializerHandler = (serializerValidatorHandler) => {
+  return new SerializerHandler(serializerValidatorHandler)
+}
+
+export const getSerializer = (
+  getSerializerTypeFunc,
+  serializeFunc,
+  parseFunc,
+) => ({
+  getSerializerType: getSerializerTypeFunc,
+  serialize: serializeFunc,
+  parse: parseFunc,
 })
+
+export { faker }
