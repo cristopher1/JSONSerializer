@@ -89,6 +89,8 @@ describe(`class SerializerHandler (${filePath})`, () => {
     })
     it('Should not add serializers when they do not pass the validation', () => {
       // Arrange
+      const expected = ValidatorError
+
       const serializerValidators = [
         new PropertyContainsValidTypeValidator(
           new ContainsPropertyValidator('getSerializerType'),
@@ -115,7 +117,7 @@ describe(`class SerializerHandler (${filePath})`, () => {
       const result = () => serializerHandler.addSerializer(serializer)
 
       // Assert
-      expect(result).toThrow(ValidatorError)
+      expect(result).toThrow(expected)
     })
   })
 })
