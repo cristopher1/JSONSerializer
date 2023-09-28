@@ -12,8 +12,15 @@ export class SerializerHandler {
     return { ...serializers }
   }
 
+  #validate(serializer) {
+    const serializerValidatorHandler = this.#serializerValidatorHandler
+    if (serializerValidatorHandler) {
+      serializerValidatorHandler.validate(serializer)
+    }
+  }
+
   addSerializer(serializer) {
-    this.#serializerValidatorHandler.validate(serializer)
+    this.#validate(serializer)
 
     const serializerType = serializer.getSerializerType()
     this.#serializers[serializerType] = serializer
