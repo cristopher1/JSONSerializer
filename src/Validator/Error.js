@@ -1,12 +1,10 @@
 export class ValidatorError extends Error {
-  #name
-
   constructor(name, message) {
     super(message)
-    this.#name = name
+    super.name = name
   }
 
   getName() {
-    return this.#name
+    return super.name
   }
 }
