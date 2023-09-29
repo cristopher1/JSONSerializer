@@ -65,9 +65,9 @@ export class JsonSerializer {
     this.#refreshJsonSerializer()
   }
 
-  serialize(data) {
+  serialize(data, space) {
     const replacer = this.#replacer
-    return JSON.stringify(data, replacer)
+    return JSON.stringify(data, replacer, space)
   }
 
   parse(data) {
