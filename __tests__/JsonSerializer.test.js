@@ -3,6 +3,85 @@ import { ValidatorError } from '../src/Validator/Error'
 import { JsonSerializer } from '../src/core/JsonSerializer'
 import { buildJsonSerializer } from '../src'
 
+class AirplaneTestClass {
+  #model
+
+  constructor(model) {
+    this.#model = model
+  }
+
+  getModel() {
+    return this.#model
+  }
+
+  getObjectLiteral() {
+    return {
+      model: this.#model,
+    }
+  }
+}
+
+class WheelTestClass {
+  #duration
+
+  constructor(duration) {
+    this.#duration = duration
+  }
+
+  getDuration() {
+    return this.#duration
+  }
+
+  getObjectLiteral() {
+    return {
+      duration: this.#duration,
+    }
+  }
+}
+
+class TransportVehicleTestClass {
+  #wheels
+
+  constructor(wheels) {
+    this.#wheels = wheels
+  }
+
+  getWheels() {
+    return [...this.#wheels]
+  }
+
+  getObjectLiteral() {
+    return {
+      wheels: this.#wheels,
+    }
+  }
+}
+
+class AirportTestClass {
+  #transportVehicles
+  #airplanes
+
+  constructor(transportVehicles, airplanes) {
+    this.#transportVehicles = transportVehicles
+    this.#airplanes = airplanes
+  }
+
+  getTransportVehicles() {
+    return [...this.#transportVehicles]
+  }
+
+  getAirplanes() {
+    return [...this.#airplanes]
+  }
+
+  getObjectLiteral() {
+    return {
+      transportVehicles: this.#transportVehicles,
+      airplanes: this.#airplanes,
+    }
+  }
+}
+
 /* eslint-disable no-eval */
 const filePath = 'src/index.js'
 
@@ -231,26 +310,23 @@ describe(`export function buildJsonSerializer (${filePath})`, () => {
         })
         it('Should return a serialized data when there is a serializer for that data and its typeof is object', () => {
           // Arrange
-          class MyObject {
-            constructor(data1) {
-              this.data1 = data1
-            }
+          const model = faker.string.sample()
+          const unserializedData = new AirplaneTestClass(model)
 
-            toString() {
-              return `({ data1: ${this.data1}})`
-            }
-          }
-          const unserializedData = new MyObject('string')
           const serializer = getSerializer(
-            () => 'MyObject',
-            (unserializerData) => ({ value: unserializerData.toString() }),
+            () => 'AirplaneTestClass',
+            (unserializedData) => ({
+              value: unserializedData.getObjectLiteral(),
+            }),
             (serializedData) => {
               const { value } = serializedData
-              const parameters = Object.values(eval(value))
-              return new MyObject(...parameters)
+              const parameters = Object.values(value)
+              return new AirplaneTestClass(...parameters)
             },
           )
-          const expected = `{"__typeof__":"MyObject","value":"${unserializedData.toString()}"}`
+
+          const __typeof__ = serializer.getSerializerType()
+          const expected = `{"__typeof__":"${__typeof__}","value":{"model":"${model}"}}`
 
           jsonSerializer.addSerializerAndRefreshJsonSerializer(serializer)
 
@@ -323,53 +399,102 @@ describe(`export function buildJsonSerializer (${filePath})`, () => {
           })
           it('Should return unserialized data when there is a serializer for that data and its typeof is object', () => {
             // Arrange
-            class NewObject {
-              #data3
+            const transportVehicles = [
+              new TransportVehicleTestClass([
+                new WheelTestClass(faker.number.int()),
+                new WheelTestClass(faker.number.int()),
+                new WheelTestClass(faker.number.int()),
+              ]),
+              new TransportVehicleTestClass([
+                new WheelTestClass(faker.number.int()),
+                new WheelTestClass(faker.number.int()),
+                new WheelTestClass(faker.number.int()),
+                new WheelTestClass(faker.number.int()),
+              ]),
+              new TransportVehicleTestClass([
+                new WheelTestClass(faker.number.int()),
+                new WheelTestClass(faker.number.int()),
+                new WheelTestClass(faker.number.int()),
+                new WheelTestClass(faker.number.int()),
+                new WheelTestClass(faker.number.int()),
+              ]),
+            ]
 
-              constructor(data1, data2, data3) {
-                this.data1 = data1
-                this.data2 = data2
-                this.#data3 = data3
-              }
+            const airplanes = [
+              new AirplaneTestClass(faker.string.sample()),
+              new AirplaneTestClass(faker.string.sample()),
+              new AirplaneTestClass(faker.string.sample()),
+              new AirplaneTestClass(faker.string.sample()),
+              new AirplaneTestClass(faker.string.sample()),
+              new AirplaneTestClass(faker.string.sample()),
+              new AirplaneTestClass(faker.string.sample()),
+            ]
 
-              getData1() {
-                return this.data1
-              }
-
-              getData2() {
-                return this.data2
-              }
-
-              getData3() {
-                return this.#data3
-              }
-
-              toString() {
-                return `(
-                  { 
-                    data1: "${this.data1}",
-                    data2: [${this.data2}],
-                    data3: "${this.#data3}"
-                  }
-                )`
-              }
-            }
-            const unserializedData = new NewObject(
-              'string',
-              [1, 2, 3],
-              'lalalalal',
+            const unserializedData = new AirportTestClass(
+              transportVehicles,
+              airplanes,
             )
-            const serializer = getSerializer(
-              () => 'NewObject',
-              (unserializerData) => ({ value: unserializerData.toString() }),
+
+            const airportTestClassSerializer = getSerializer(
+              () => 'AirportTestClass',
+              (unserializerData) => ({
+                value: unserializerData.getObjectLiteral(),
+              }),
               (serializedData) => {
                 const { value } = serializedData
-                const parameters = Object.values(eval(value))
-                return new NewObject(...parameters)
+                const parameters = Object.values(value)
+                return new AirportTestClass(...parameters)
               },
             )
 
-            jsonSerializer.addSerializerAndRefreshJsonSerializer(serializer)
+            const airplaneTestClassSerializer = getSerializer(
+              () => 'AirplaneTestClass',
+              (unserializerData) => ({
+                value: unserializerData.getObjectLiteral(),
+              }),
+              (serializedData) => {
+                const { value } = serializedData
+                const parameters = Object.values(value)
+                return new AirplaneTestClass(...parameters)
+              },
+            )
+
+            const transportVehicleTestClassSerializer = getSerializer(
+              () => 'TransportVehicleTestClass',
+              (unserializerData) => ({
+                value: unserializerData.getObjectLiteral(),
+              }),
+              (serializedData) => {
+                const { value } = serializedData
+                const parameters = Object.values(value)
+                return new TransportVehicleTestClass(...parameters)
+              },
+            )
+
+            const wheelTestClassSerializer = getSerializer(
+              () => 'WheelTestClass',
+              (unserializerData) => ({
+                value: unserializerData.getObjectLiteral(),
+              }),
+              (serializedData) => {
+                const { value } = serializedData
+                const parameters = Object.values(value)
+                return new WheelTestClass(...parameters)
+              },
+            )
+
+            jsonSerializer.addSerializerAndRefreshJsonSerializer(
+              airportTestClassSerializer,
+            )
+            jsonSerializer.addSerializerAndRefreshJsonSerializer(
+              airplaneTestClassSerializer,
+            )
+            jsonSerializer.addSerializerAndRefreshJsonSerializer(
+              transportVehicleTestClassSerializer,
+            )
+            jsonSerializer.addSerializerAndRefreshJsonSerializer(
+              wheelTestClassSerializer,
+            )
 
             const serializedData = jsonSerializer.serialize(unserializedData)
             const expected = unserializedData
@@ -378,9 +503,36 @@ describe(`export function buildJsonSerializer (${filePath})`, () => {
             const result = jsonSerializer.parse(serializedData)
 
             // Assert
-            expect(result.getData1()).toBe(expected.getData1())
-            expect(result.getData2()).toEqual(expected.getData2())
-            expect(result.getData3()).toBe(expected.getData3())
+            // AirportTestClass
+            expect(result.getAirplanes()).toEqual(expected.getAirplanes())
+            expect(result.getTransportVehicles()).toEqual(
+              expected.getTransportVehicles(),
+            )
+
+            // AirplaneTestClass
+            const resultAirplanes = result.getAirplanes()
+            const expectedAirplanes = expected.getAirplanes()
+            for (let i = 0; i < resultAirplanes.lenght; i++) {
+              expect(resultAirplanes[i].getModel()).toBe(
+                expectedAirplanes[i].getModel(),
+              )
+            }
+            // TransportVehicleTestClass
+            const resultTransportVehicles = result.getTransportVehicles()
+            const expectedTransportVehicles = expected.getTransportVehicles()
+            for (let i = 0; i < resultTransportVehicles.lenght; i++) {
+              expect(resultTransportVehicles[i].getWheels()).toEqual(
+                expectedTransportVehicles.getWheels(),
+              )
+              // WheelTestClass
+              const resultWheels = resultTransportVehicles[i]
+              const expectedWheels = expectedTransportVehicles[i]
+              for (let j = 0; j < resultWheels.lenght; j++) {
+                expect(resultWheels[j].getDuration()).toBe(
+                  expectedWheels[j].getDuration(),
+                )
+              }
+            }
           })
         })
       })
