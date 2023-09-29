@@ -37,7 +37,7 @@ describe(`class ReviverBuilder (${filePath})`, () => {
         reviverBuilder = getReviverBuilder()
       })
       describe('When it is created without serializers (setSerializers is not called)', () => {
-        it('Should return formated data when there is not a serializer for this data', () => {
+        it('Should return formated data when there is not a serializer for that data', () => {
           // Arrange
           const key = 'data'
           const formatedData = {
@@ -55,7 +55,7 @@ describe(`class ReviverBuilder (${filePath})`, () => {
         })
       })
       describe('When it is created with serializers (setSerializers is called)', () => {
-        it('Should return formated data when there is not a serializer for this data', () => {
+        it('Should return formated data when there is not a serializer for that data', () => {
           // Arrange
           const serializers = {}
           const serializer = getSerializer(
@@ -86,7 +86,7 @@ describe(`class ReviverBuilder (${filePath})`, () => {
           // Assert
           expect(result).toBe(expected)
         })
-        it('Should return unformat data when there is a serializer for this data', () => {
+        it('Should return unformat data when there is a serializer for that data', () => {
           // Arrange
           const serializers = {}
           const serializer = getSerializer(

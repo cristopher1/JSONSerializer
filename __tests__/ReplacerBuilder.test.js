@@ -37,7 +37,7 @@ describe(`class ReplacerBuilder (${filePath})`, () => {
         completeObjectToFormat = {}
       })
       describe('When it is created without serializers (setSerializers is not called)', () => {
-        it('Should return unformated data when there is not a serializer for this data', () => {
+        it('Should return unformated data when there is not a serializer for that data', () => {
           // Arrange
           const key = 'data'
           const unformatedData = () => {}
@@ -57,7 +57,7 @@ describe(`class ReplacerBuilder (${filePath})`, () => {
         })
       })
       describe('When it is created with serializers (setSerializers is called)', () => {
-        it('Should return unformated data when there is not a serializer for this data', () => {
+        it('Should return unformated data when there is not a serializer for that data', () => {
           // Arrange
           const serializers = {}
           const serializer = getSerializer(
@@ -87,7 +87,7 @@ describe(`class ReplacerBuilder (${filePath})`, () => {
           // Assert
           expect(result).toEqual(expected)
         })
-        it('Should return formated data when there is a serializer for this data', () => {
+        it('Should return formated data when there is a serializer for that data', () => {
           // Arrange
           const serializers = {}
           const serializer = getSerializer(
