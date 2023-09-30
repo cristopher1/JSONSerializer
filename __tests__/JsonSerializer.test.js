@@ -512,7 +512,7 @@ describe(`export function buildJsonSerializer (${filePath})`, () => {
             // AirplaneTestClass
             const resultAirplanes = result.getAirplanes()
             const expectedAirplanes = expected.getAirplanes()
-            for (let i = 0; i < resultAirplanes.lenght; i++) {
+            for (let i = 0; i < resultAirplanes.length; i++) {
               expect(resultAirplanes[i].getModel()).toBe(
                 expectedAirplanes[i].getModel(),
               )
@@ -520,14 +520,14 @@ describe(`export function buildJsonSerializer (${filePath})`, () => {
             // TransportVehicleTestClass
             const resultTransportVehicles = result.getTransportVehicles()
             const expectedTransportVehicles = expected.getTransportVehicles()
-            for (let i = 0; i < resultTransportVehicles.lenght; i++) {
+            for (let i = 0; i < resultTransportVehicles.length; i++) {
               expect(resultTransportVehicles[i].getWheels()).toEqual(
-                expectedTransportVehicles.getWheels(),
+                expectedTransportVehicles[i].getWheels(),
               )
               // WheelTestClass
-              const resultWheels = resultTransportVehicles[i]
-              const expectedWheels = expectedTransportVehicles[i]
-              for (let j = 0; j < resultWheels.lenght; j++) {
+              const resultWheels = resultTransportVehicles[i].getWheels()
+              const expectedWheels = expectedTransportVehicles[i].getWheels()
+              for (let j = 0; j < resultWheels.length; j++) {
                 expect(resultWheels[j].getDuration()).toBe(
                   expectedWheels[j].getDuration(),
                 )
