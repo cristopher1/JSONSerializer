@@ -4,6 +4,10 @@
   "description": "Wrapper to use JSON.parse and JSON.stringify",
   "main": "index.js",
   "types": "./dist/types/index.d.ts",
+  "exports": {
+    "import": "./dist/esm/index.mjs",
+    "require": "./dist/cjs/index.js"
+  },
   "scripts": {
     "init:husky": "husky install",
     "init": "npm run init:husky",
