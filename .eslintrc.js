@@ -18,6 +18,14 @@ module.exports = {
       env: {
         node: true,
       },
+      files: ['src/**/*.js'],
+      extends: ['plugin:jsdoc/recommended'],
+      plugins: ['jsdoc'],
+    },
+    {
+      env: {
+        node: true,
+      },
       files: ['__tests__/**/*.js'],
       extends: ['plugin:jest/recommended'],
       plugins: ['jest'],
