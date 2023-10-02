@@ -1,3 +1,8 @@
+import { Validator } from './Validator'
+
+/**
+ * @implements {Validator}
+ */
 export class PropertyContainsValidTypeValidator {
   #containsPropertyValidator
   #isTypeValidator
