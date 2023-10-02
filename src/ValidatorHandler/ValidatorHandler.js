@@ -1,7 +1,13 @@
+import { Validator } from '../Validator/Validator'
+
 export class ValidatorHandler {
   #validators
 
-  constructor(validators = []) {
+  /**
+   *
+   * @param {Validator[]} validators Validator array used to validate data
+   */
+  constructor(validators) {
     this.#validators = validators
   }
 
