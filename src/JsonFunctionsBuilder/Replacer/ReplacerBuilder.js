@@ -1,17 +1,21 @@
 export class ReplacerBuilder {
   #serializers
 
+  /**
+   * Object used to build the replacer function. That function is used by
+   * JSON.stringify method.
+   */
   constructor() {
     this.#serializers = {}
   }
 
   /**
-   * Sets serializers. When the build method is called, the serializers are
+   * Sets Serializers. When the build method is called, the Serializers are
    * added to the replacer function.
    *
-   * @param {object} serializers An object that contains serializers added to
+   * @param {object} serializers An object that contains Serializers added to
    *   JsonSerializer object. The keys are obtained from
-   *   serializer.getSerializerType method and the values are the Serializer
+   *   Serializer.getSerializerType method and the values are the Serializer
    *   objects.
    */
   setSerializers(serializers) {
