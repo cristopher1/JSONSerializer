@@ -5,6 +5,8 @@ export class SerializerHandler {
   #serializerValidatorHandler
 
   /**
+   * Object used to manage the Serializer objects.
+   *
    * @param {ValidatorHandler} [serializerValidatorHandler] A ValidatorHandler
    *   object used to validate Serializers.
    */
@@ -14,11 +16,11 @@ export class SerializerHandler {
   }
 
   /**
-   * Returns an object that contains the serializers added to JsonSerializer
-   * object. The keys are obtained from serializer.getSerializerType method and
+   * Returns an object that contains the Serializers added to JsonSerializer
+   * object. The keys are obtained from Serializer.getSerializerType method and
    * the values are the Serializer objects.
    *
-   * @returns {object} Object that contains the serializers added to
+   * @returns {object} Object that contains the Serializers added to
    *   JsonSerializer object.
    */
   getSerializers() {
@@ -27,7 +29,7 @@ export class SerializerHandler {
   }
 
   /**
-   * Validates a Serializer. If it is invalid an error will be thrown.
+   * Validates a Serializer. If it is invalid an Error will be thrown.
    *
    * @param {object} serializer An object used to serialize and unserialize
    *   data.
@@ -46,12 +48,12 @@ export class SerializerHandler {
   }
 
   /**
-   * Adds a Serializer. If it is invalid an error will be thrown.
+   * Adds a Serializer. If it is invalid an Error will be thrown.
    *
    * @param {object} serializer An object used to serialize and unserialize
    *   data.
    * @param {() => string} serializer.getSerializerType An function that return
-   *   the type of serializer.
+   *   the type of Serializer.
    * @param {(unserializedData: any) => object | string} serializer.serialize
    *   An function that serialize data.
    * @param {(serializedData: string) => any} serializer.parse An function that
