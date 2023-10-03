@@ -7,6 +7,12 @@ import { ReviverBuilder } from './JsonFunctionBuilder/Reviver/ReviverBuilder'
 import { SerializerHandler } from './SerializerHandler/SerializerHandler'
 import { JsonSerializer } from './core/JSONSerializer'
 
+/**
+ * Builds a JsonSerializer object using the builder pattern. Every call to this
+ * function generates a new instance of JsonSerializer.
+ *
+ * @returns {JsonSerializer} New instance of JsonSerializer
+ */
 export function buildJsonSerializer() {
   const serializerValidators = [
     new PropertyContainsValidTypeValidator(
