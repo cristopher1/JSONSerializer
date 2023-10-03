@@ -3,15 +3,26 @@ import { ValidatorThrowError } from './ValidatorThrowError'
 export class ContainsPropertyValidator extends ValidatorThrowError {
   #requiredPropertyName
 
+  /** @param {string} requiredPropertyName The name of the required property. */
   constructor(requiredPropertyName) {
     super('Property not found')
     this.#requiredPropertyName = requiredPropertyName
   }
 
+  /**
+   * Returns the name of the required property to find.
+   *
+   * @returns {string} The name of the required property to find.
+   */
   getRequiredPropertyName() {
     return this.#requiredPropertyName
   }
 
+  /**
+   * Validates the data. If they are invalid an error is thrown.
+   *
+   * @param {any} data The data to validate.
+   */
   validate(data) {
     const requiredPropertyName = this.#requiredPropertyName
 

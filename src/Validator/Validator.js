@@ -1,4 +1,9 @@
 /** @interface */
 export class Validator {
-  validate() {}
+  /**
+   * Validates the data. If they are invalid an error is thrown.
+   *
+   * @param {any} data The data to validate.
+   */
+  validate(data) {}
 }
