@@ -1,6 +1,4 @@
-/**
- * @interface
- */
+/** @interface */
 export class Validator {
   validate() {}
 }

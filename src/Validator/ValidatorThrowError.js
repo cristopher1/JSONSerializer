@@ -1,9 +1,7 @@
 import { Validator } from './Validator'
 import { ValidatorError } from './Error'
 
-/**
- * @implements {Validator}
- */
+/** @implements {Validator} */
 export class ValidatorThrowError {
   #errorName
 
