@@ -8,6 +8,9 @@ export class PropertyContainsValidTypeValidator {
   #isTypeValidator
 
   /**
+   * Validates if the data contains the required property and this is of the
+   * required type.
+   *
    * @param {ContainsPropertyValidator} containsPropertyValidator A
    *   containsPropertyValidator object.
    * @param {IsTypeValidator} isTypeValidator An IsTypeValidator object.
@@ -18,7 +21,7 @@ export class PropertyContainsValidTypeValidator {
   }
 
   /**
-   * Validates the data. If they are invalid an error is thrown.
+   * Validates the data. If they are invalid an Error is thrown.
    *
    * @param {any} data The data to validate.
    */

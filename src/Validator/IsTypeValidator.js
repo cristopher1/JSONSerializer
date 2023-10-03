@@ -5,6 +5,9 @@ export class IsTypeValidator extends ValidatorThrowError {
   #validType
 
   /**
+   * Validates if the data is of the required type (this Validator validates
+   * through typeof data).
+   *
    * @param {string} validType The valid type expected. It must match the values
    *   returned by typeof operator.
    */
@@ -15,7 +18,7 @@ export class IsTypeValidator extends ValidatorThrowError {
 
   /**
    * Validates the data using the typeof operator to obtain the data type. If
-   * they are invalid an error is thrown.
+   * they are invalid an Error is thrown.
    *
    * @param {any} data The data to validate.
    */

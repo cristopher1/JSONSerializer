@@ -1,7 +1,9 @@
 export class ValidatorError extends Error {
   /**
-   * @param {string} name The error's name.
-   * @param {string} message The error's message.
+   * Error throws by Validator class.
+   *
+   * @param {string} name The Error's name.
+   * @param {string} message The Error's message.
    */
   constructor(name, message) {
     super(message)

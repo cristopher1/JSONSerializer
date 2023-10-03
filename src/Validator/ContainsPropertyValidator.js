@@ -3,7 +3,11 @@ import { ValidatorThrowError } from './ValidatorThrowError'
 export class ContainsPropertyValidator extends ValidatorThrowError {
   #requiredPropertyName
 
-  /** @param {string} requiredPropertyName The name of the required property. */
+  /**
+   * Validates if the data contains the required property.
+   *
+   * @param {string} requiredPropertyName The name of the required property.
+   */
   constructor(requiredPropertyName) {
     super('Property not found')
     this.#requiredPropertyName = requiredPropertyName
@@ -19,7 +23,7 @@ export class ContainsPropertyValidator extends ValidatorThrowError {
   }
 
   /**
-   * Validates the data. If they are invalid an error is thrown.
+   * Validates the data. If they are invalid an Error is thrown.
    *
    * @param {any} data The data to validate.
    */

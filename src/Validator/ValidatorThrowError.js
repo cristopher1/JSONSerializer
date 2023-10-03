@@ -1,17 +1,25 @@
 import { Validator } from './Validator'
 import { ValidatorError } from './Error'
 
-/** @implements {Validator} */
+/**
+ * @abstract
+ * @implements {Validator}
+ */
 export class ValidatorThrowError {
   #errorName
 
-  /** @param {string} errorName The name of the error to throw. */
+  /**
+   * This class is extended when a Validator class must throw an Error within
+   * its validate method.
+   *
+   * @param {string} errorName The name of the Error to throw.
+   */
   constructor(errorName) {
     this.#errorName = errorName
   }
 
   /**
-   * Throws an error when the data are invalid.
+   * Throws an Error when the data are invalid.
    *
    * @param {any} data The invalid data.
    * @param {string} errorDescription A description that indicates the problems
