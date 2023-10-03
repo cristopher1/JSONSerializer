@@ -1,17 +1,43 @@
+import { ValidatorHandler } from '../ValidatorHandler/ValidatorHandler'
+
 export class SerializerHandler {
   #serializers
   #serializerValidatorHandler
 
+  /**
+   * @param {ValidatorHandler} [serializerValidatorHandler] A ValidatorHandler
+   *   object used to validate Serializers.
+   */
   constructor(serializerValidatorHandler) {
     this.#serializers = {}
     this.#serializerValidatorHandler = serializerValidatorHandler
   }
 
+  /**
+   * Returns an object that contains the serializers added to JsonSerializer
+   * object. The keys are obtained from serializer.getSerializerType method and
+   * the values are the Serializer objects.
+   *
+   * @returns {object} Object that contains the serializers added to
+   *   JsonSerializer object.
+   */
   getSerializers() {
     const serializers = this.#serializers
     return { ...serializers }
   }
 
+  /**
+   * Validates a Serializer. If it is invalid an error will be thrown.
+   *
+   * @param {object} serializer An object used to serialize and unserialize
+   *   data.
+   * @param {() => string} serializer.getSerializerType An function that return
+   *   the type of serializer.
+   * @param {(unserializedData: any) => object | string} serializer.serialize
+   *   An function that serialize data.
+   * @param {(serializedData: string) => any} serializer.parse An function that
+   *   unserialize data.
+   */
   #validate(serializer) {
     const serializerValidatorHandler = this.#serializerValidatorHandler
     if (serializerValidatorHandler) {
@@ -19,6 +45,18 @@ export class SerializerHandler {
     }
   }
 
+  /**
+   * Adds a Serializer. If it is invalid an error will be thrown.
+   *
+   * @param {object} serializer An object used to serialize and unserialize
+   *   data.
+   * @param {() => string} serializer.getSerializerType An function that return
+   *   the type of serializer.
+   * @param {(unserializedData: any) => object | string} serializer.serialize
+   *   An function that serialize data.
+   * @param {(serializedData: string) => any} serializer.parse An function that
+   *   unserialize data.
+   */
   addSerializer(serializer) {
     this.#validate(serializer)
 
