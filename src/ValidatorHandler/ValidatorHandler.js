@@ -11,7 +11,7 @@ export class ValidatorHandler {
     this.#validators = validators
   }
 
-  /** @param {any} data Data to validate */
+  /** @param {any} data Data to validate. */
   validate(data) {
     const validators = this.#validators
     for (const validator of validators) {
