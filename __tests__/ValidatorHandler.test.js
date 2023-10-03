@@ -23,7 +23,7 @@ describe(`class ValidatorHandler (${filePath})`, () => {
       // Assert
       expect(result).toThrow(expected)
     })
-    it('Should not throw an Error when the ValidatorHandler does not have validators', () => {
+    it('Should throw an Error when the ValidatorHandler does not have validators', () => {
       // Arrange
       const data = {
         keyWithData: faker.animal.bear(),
@@ -34,7 +34,7 @@ describe(`class ValidatorHandler (${filePath})`, () => {
       const result = () => validatorHandler.validate(data)
 
       // Assert
-      expect(result).not.toThrow()
+      expect(result).toThrow()
     })
     it('Should not throw a ValidatorError when the data is valid', () => {
       // Arrange
