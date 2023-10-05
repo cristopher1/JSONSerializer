@@ -21,10 +21,11 @@
     "lint:build-stage": "eslint --ext .js,.mjs src",
     "lint:build-stage:fix": "npm run lint:build-stage -- --fix",
     "build:clean": "rimraf dist",
+    "build:clean-dist-tmp": "rimraf dist/tmp",
     "build:bundle": "rollup --config",
     "build:tsc": "tsc",
     "prebuild": "npm run lint:build-stage && npm run format:build-stage:fix && npm run build:clean",
-    "build": "npm run build:bundle && npm run build:tsc",
+    "build": "npm run build:tsc && npm run build:bundle && npm run build:clean-dist-tmp",
     "test": "jest --verbose",
     "quality-check": "npm run format && npm run lint && npm run test"
   },
@@ -66,6 +67,7 @@
     "prettier-plugin-jsdoc": "^1.0.2",
     "rimraf": "^5.0.1",
     "rollup": "^3.29.1",
+    "rollup-plugin-dts": "^6.0.2",
     "typescript": "^5.2.2"
   },
   "dependencies": {
