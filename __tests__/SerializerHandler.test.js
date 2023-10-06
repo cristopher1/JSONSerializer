@@ -1,8 +1,8 @@
-import { ValidatorHandler } from '../src/ValidatorHandler/ValidatorHandler'
-import { PropertyContainsValidTypeValidator } from '../src/Validator/PropertyContainsValidTypeValidator'
-import { ContainsPropertyValidator } from '../src/Validator/ContainsPropertyValidator'
-import { IsTypeValidator } from '../src/Validator/IsTypeValidator'
-import { ValidatorError } from '../src/Validator/Error'
+import { ValidatorHandler } from '../src/Validators/Handler/ValidatorHandler'
+import { PropertyContainsValidTypeValidator } from '../src/Validators/PropertyContainsValidTypeValidator'
+import { ContainsPropertyValidator } from '../src/Validators/ContainsPropertyValidator'
+import { IsTypeValidator } from '../src/Validators/IsTypeValidator'
+import { ValidatorError } from '../src/Validators/Error'
 import { getSerializer, getSerializerHandler } from './helpers'
 
 const filePath = 'src/SerializerHandler/SerializerHandler.js'

@@ -1,5 +1,5 @@
 import { faker, getSerializer } from './helpers'
-import { ValidatorError } from '../src/Validator/Error'
+import { ValidatorError } from '../src/Validators/Error'
 import { JsonSerializer } from '../src/core/JsonSerializer'
 import { buildJsonSerializer } from '../src'
 

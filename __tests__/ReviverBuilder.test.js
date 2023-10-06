@@ -1,4 +1,4 @@
-import { ReviverBuilder } from '../src/JsonFunctionsBuilder/Reviver/ReviverBuilder'
+import { ReviverBuilder } from '../src/FunctionsBuilder/Reviver/ReviverBuilder'
 import { getSerializer, faker } from './helpers'
 
 /* eslint-disable no-eval */

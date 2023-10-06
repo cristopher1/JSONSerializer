@@ -1,7 +1,7 @@
-import { ContainsPropertyValidator } from '../../src/Validator/ContainsPropertyValidator'
-import { IsTypeValidator } from '../../src/Validator/IsTypeValidator'
-import { PropertyContainsValidTypeValidator } from '../../src/Validator/PropertyContainsValidTypeValidator'
-import { ValidatorError } from '../../src/Validator/Error'
+import { ContainsPropertyValidator } from '../../src/Validators/ContainsPropertyValidator'
+import { IsTypeValidator } from '../../src/Validators/IsTypeValidator'
+import { PropertyContainsValidTypeValidator } from '../../src/Validators/PropertyContainsValidTypeValidator'
+import { ValidatorError } from '../../src/Validators/Error'
 import { faker } from '../helpers'
 
 const filePath = 'src/Validator/PropertyContainsValidTypeValidator.js'

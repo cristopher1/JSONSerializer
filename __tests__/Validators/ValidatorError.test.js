@@ -1,4 +1,4 @@
-import { ValidatorError } from '../../src/Validator/Error'
+import { ValidatorError } from '../../src/Validators/Error'
 import { faker } from '../helpers'
 
 const filePath = 'src/Validator/Error.js'

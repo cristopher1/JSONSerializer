@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { SerializerHandler } from '../../src/SerializerHandler/SerializerHandler'
+import { SerializerHandler } from '../../src/Serializers/Handler/SerializerHandler'
 
 faker.seed(27)
 

@@ -1,5 +1,5 @@
-import { ContainsPropertyValidator } from '../../src/Validator/ContainsPropertyValidator'
-import { ValidatorError } from '../../src/Validator/Error'
+import { ContainsPropertyValidator } from '../../src/Validators/ContainsPropertyValidator'
+import { ValidatorError } from '../../src/Validators/Error'
 import { faker } from '../helpers'
 
 const filePath = 'src/Validator/ContainsPropertyValidator.js'

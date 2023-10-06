@@ -1,8 +1,8 @@
-import { ContainsPropertyValidator } from '../src/Validator/ContainsPropertyValidator'
-import { ValidatorHandler } from '../src/ValidatorHandler/ValidatorHandler'
-import { ValidatorError } from '../src/Validator/Error'
+import { ContainsPropertyValidator } from '../src/Validators/ContainsPropertyValidator'
+import { ValidatorHandler } from '../src/Validators/Handler/ValidatorHandler'
+import { ValidatorError } from '../src/Validators/Error'
 import { faker } from './helpers'
-import { IsTypeValidator } from '../src/Validator/IsTypeValidator'
+import { IsTypeValidator } from '../src/Validators/IsTypeValidator'
 
 const filePath = 'src/ValidatorHandler/ValidatorHandler.js'
 

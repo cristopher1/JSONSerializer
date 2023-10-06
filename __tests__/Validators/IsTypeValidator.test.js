@@ -1,5 +1,5 @@
-import { IsTypeValidator } from '../../src/Validator/IsTypeValidator'
-import { ValidatorError } from '../../src/Validator/Error'
+import { IsTypeValidator } from '../../src/Validators/IsTypeValidator'
+import { ValidatorError } from '../../src/Validators/Error'
 import { faker } from '../helpers'
 
 const filePath = 'src/Validator/IsTypeValidator.js'

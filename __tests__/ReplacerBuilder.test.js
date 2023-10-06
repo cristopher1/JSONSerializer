@@ -1,4 +1,4 @@
-import { ReplacerBuilder } from '../src/JsonFunctionsBuilder/Replacer/ReplacerBuilder'
+import { ReplacerBuilder } from '../src/FunctionsBuilder/Replacer/ReplacerBuilder'
 import { getSerializer, faker } from './helpers'
 
 const filePath = 'src/JsonFunctionBuilder/Replacer/ReplacerBuilder.js'
