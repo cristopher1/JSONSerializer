@@ -1,16 +1,16 @@
 import { IsTypeValidator } from '../../src/Validators/IsTypeValidator'
-import { ValidatorError } from '../../src/Validators/Error'
+import { InvalidTypeError } from '../../src/Validators/Error'
 import { faker } from '../helpers'
 
 const filePath = 'src/Validators/IsTypeValidator.js'
 
 describe(`class IsTypeValidator (${filePath})`, () => {
   describe('(method) validate', () => {
-    it('Should throw a ValidatorError when the data is not the required type', () => {
+    it('Should throw a InvalidTypeError when the data is not the required type', () => {
       // Arrange
       const data = faker.number.bigInt()
       const validator = new IsTypeValidator('string')
-      const expected = ValidatorError
+      const expected = InvalidTypeError
 
       // Act
       const result = () => validator.validate(data)

@@ -1,5 +1,5 @@
 import { ContainsPropertyValidator } from '../../src/Validators/ContainsPropertyValidator'
-import { ValidatorError } from '../../src/Validators/Error'
+import { DoesNotContainPropertyError } from '../../src/Validators/Error'
 import { faker } from '../helpers'
 
 const filePath = 'src/Validators/ContainsPropertyValidator.js'
@@ -19,13 +19,13 @@ describe(`class ContainsPropertyValidator (${filePath})`, () => {
     })
   })
   describe('(method) validate', () => {
-    it('Should throw a ValidatorError when the data does not contain the required property', () => {
+    it('Should throw a DoesNotContainPropertyError when the data does not contain the required property', () => {
       // Arrange
       const data = {
         function: () => {},
       }
       const validator = new ContainsPropertyValidator('serializer')
-      const expected = ValidatorError
+      const expected = DoesNotContainPropertyError
 
       // Act
       const result = () => validator.validate(data)
