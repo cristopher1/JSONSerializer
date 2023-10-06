@@ -1,4 +1,4 @@
-import { ValidatorHandler } from '../../Validators/Handler/ValidatorHandler'
+import { ValidatorHandler } from '../../validators/handler/ValidatorHandler'
 
 export class SerializerHandler {
   #serializers

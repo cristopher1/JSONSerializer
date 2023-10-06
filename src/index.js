@@ -1,10 +1,10 @@
-import { ValidatorHandler } from './Validators/Handler/ValidatorHandler'
-import { ContainsPropertyValidator } from './Validators/ContainsPropertyValidator'
-import { PropertyContainsValidTypeValidator } from './Validators/PropertyContainsValidTypeValidator'
-import { IsTypeValidator } from './Validators/IsTypeValidator'
-import { ReplacerBuilder } from './FunctionsBuilder/Replacer/ReplacerBuilder'
-import { ReviverBuilder } from './FunctionsBuilder/Reviver/ReviverBuilder'
-import { SerializerHandler } from './Serializers/Handler/SerializerHandler'
+import { ValidatorHandler } from './validators/handler/ValidatorHandler'
+import { ContainsPropertyValidator } from './validators/ContainsPropertyValidator'
+import { PropertyContainsValidTypeValidator } from './validators/PropertyContainsValidTypeValidator'
+import { IsTypeValidator } from './validators/IsTypeValidator'
+import { ReplacerBuilder } from './functionsBuilder/replacer/ReplacerBuilder'
+import { ReviverBuilder } from './functionsBuilder/reviver/ReviverBuilder'
+import { SerializerHandler } from './serializers/handler/SerializerHandler'
 import { JsonSerializer } from './core/JSONSerializer'
 
 /**
