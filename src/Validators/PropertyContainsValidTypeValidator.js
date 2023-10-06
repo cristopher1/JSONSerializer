@@ -1,8 +1,13 @@
 import { ContainsPropertyValidator } from './ContainsPropertyValidator'
+import { DoesNotContainPropertyError, InvalidTypeError } from './Error'
 import { IsTypeValidator } from './IsTypeValidator'
 import { Validator } from './Validator'
 
-/** @implements {Validator} */
+/**
+ * @throws {DoesNotContainPropertyError}
+ * @throws {InvalidTypeError}
+ * @implements {Validator}
+ */
 export class PropertyContainsValidTypeValidator {
   #containsPropertyValidator
   #isTypeValidator

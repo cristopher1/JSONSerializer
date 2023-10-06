@@ -1,7 +1,12 @@
-import { ValidatorThrowError } from './ValidatorThrowError'
+import { InvalidTypeError } from './Error'
+import { Validator } from './Validator'
 
 /* eslint-disable valid-typeof */
-export class IsTypeValidator extends ValidatorThrowError {
+/**
+ * @throws {InvalidTypeError}
+ * @implements {Validator}
+ */
+export class IsTypeValidator {
   #validType
 
   /**
@@ -12,7 +17,6 @@ export class IsTypeValidator extends ValidatorThrowError {
    *   returned by typeof operator.
    */
   constructor(validType) {
-    super('Incorrect type')
     this.#validType = validType
   }
 
@@ -26,8 +30,8 @@ export class IsTypeValidator extends ValidatorThrowError {
     const validType = this.#validType
 
     if (typeof data !== validType) {
-      const errorDescription = `The value expected is ${validType}`
-      super.throwError(data, errorDescription)
+      const message = `${data} should be ${validType}`
+      throw new InvalidTypeError(message)
     }
   }
 }

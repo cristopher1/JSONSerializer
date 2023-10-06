@@ -1,6 +1,11 @@
-import { ValidatorThrowError } from './ValidatorThrowError'
+import { DoesNotContainPropertyError } from './Error'
+import { Validator } from './Validator'
 
-export class ContainsPropertyValidator extends ValidatorThrowError {
+/**
+ * @throws {DoesNotContainPropertyError}
+ * @implements {Validator}
+ */
+export class ContainsPropertyValidator {
   #requiredPropertyName
 
   /**
@@ -9,7 +14,6 @@ export class ContainsPropertyValidator extends ValidatorThrowError {
    * @param {string} requiredPropertyName The name of the required property.
    */
   constructor(requiredPropertyName) {
-    super('Property not found')
     this.#requiredPropertyName = requiredPropertyName
   }
 
@@ -31,8 +35,8 @@ export class ContainsPropertyValidator extends ValidatorThrowError {
     const requiredPropertyName = this.#requiredPropertyName
 
     if (!(requiredPropertyName in data)) {
-      const errorDescription = `Does not exist the property ${requiredPropertyName}`
-      super.throwError(data, errorDescription)
+      const message = `${data} should include the ${requiredPropertyName} property`
+      throw new DoesNotContainPropertyError(message)
     }
   }
 }
