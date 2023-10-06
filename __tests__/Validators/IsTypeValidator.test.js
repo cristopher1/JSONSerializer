@@ -1,8 +1,8 @@
-import { IsTypeValidator } from '../../src/Validators/IsTypeValidator'
-import { InvalidTypeError } from '../../src/Validators/Error'
+import { IsTypeValidator } from '../../src/validators/IsTypeValidator'
+import { InvalidTypeError } from '../../src/validators/Error'
 import { faker } from '../helpers'
 
-const filePath = 'src/Validators/IsTypeValidator.js'
+const filePath = 'src/validators/IsTypeValidator.js'
 
 describe(`class IsTypeValidator (${filePath})`, () => {
   describe('(method) validate', () => {

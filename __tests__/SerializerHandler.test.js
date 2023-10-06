@@ -1,11 +1,11 @@
-import { ValidatorHandler } from '../src/Validators/Handler/ValidatorHandler'
-import { PropertyContainsValidTypeValidator } from '../src/Validators/PropertyContainsValidTypeValidator'
-import { ContainsPropertyValidator } from '../src/Validators/ContainsPropertyValidator'
-import { IsTypeValidator } from '../src/Validators/IsTypeValidator'
-import { ValidatorError } from '../src/Validators/Error'
+import { ValidatorHandler } from '../src/validators/handler/ValidatorHandler'
+import { PropertyContainsValidTypeValidator } from '../src/validators/PropertyContainsValidTypeValidator'
+import { ContainsPropertyValidator } from '../src/validators/ContainsPropertyValidator'
+import { IsTypeValidator } from '../src/validators/IsTypeValidator'
+import { ValidatorError } from '../src/validators/Error'
 import { getSerializer, getSerializerHandler } from './helpers'
 
-const filePath = 'src/Serializers/Handler/SerializerHandler.js'
+const filePath = 'src/serializers/handler/SerializerHandler.js'
 
 describe(`class SerializerHandler (${filePath})`, () => {
   describe('constructor', () => {

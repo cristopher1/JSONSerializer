@@ -1,10 +1,10 @@
-import { ContainsPropertyValidator } from '../src/Validators/ContainsPropertyValidator'
-import { ValidatorHandler } from '../src/Validators/Handler/ValidatorHandler'
-import { ValidatorError } from '../src/Validators/Error'
+import { ContainsPropertyValidator } from '../src/validators/ContainsPropertyValidator'
+import { ValidatorHandler } from '../src/validators/handler/ValidatorHandler'
+import { ValidatorError } from '../src/validators/Error'
 import { faker } from './helpers'
-import { IsTypeValidator } from '../src/Validators/IsTypeValidator'
+import { IsTypeValidator } from '../src/validators/IsTypeValidator'
 
-const filePath = 'src/Validators/Handler/ValidatorHandler.js'
+const filePath = 'src/validators/handler/ValidatorHandler.js'
 
 describe(`class ValidatorHandler (${filePath})`, () => {
   describe('(method) validate', () => {

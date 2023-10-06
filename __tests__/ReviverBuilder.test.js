@@ -1,9 +1,9 @@
-import { ReviverBuilder } from '../src/FunctionsBuilder/Reviver/ReviverBuilder'
+import { ReviverBuilder } from '../src/functionsBuilder/reviver/ReviverBuilder'
 import { getSerializer, faker } from './helpers'
 
 /* eslint-disable no-eval */
 
-const filePath = 'src/FunctionBuilder/Reviver/ReviverBuilder.js'
+const filePath = 'src/functionBuilder/reviver/ReviverBuilder.js'
 
 const getReviverBuilder = () => new ReviverBuilder()
 

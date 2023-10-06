@@ -1,8 +1,8 @@
-import { ContainsPropertyValidator } from '../../src/Validators/ContainsPropertyValidator'
-import { DoesNotContainPropertyError } from '../../src/Validators/Error'
+import { ContainsPropertyValidator } from '../../src/validators/ContainsPropertyValidator'
+import { DoesNotContainPropertyError } from '../../src/validators/Error'
 import { faker } from '../helpers'
 
-const filePath = 'src/Validators/ContainsPropertyValidator.js'
+const filePath = 'src/validators/ContainsPropertyValidator.js'
 
 describe(`class ContainsPropertyValidator (${filePath})`, () => {
   describe('(method) getRequiredPropertyName', () => {

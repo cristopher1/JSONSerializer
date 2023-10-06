@@ -1,13 +1,13 @@
-import { ContainsPropertyValidator } from '../../src/Validators/ContainsPropertyValidator'
-import { IsTypeValidator } from '../../src/Validators/IsTypeValidator'
-import { PropertyContainsValidTypeValidator } from '../../src/Validators/PropertyContainsValidTypeValidator'
+import { ContainsPropertyValidator } from '../../src/validators/ContainsPropertyValidator'
+import { IsTypeValidator } from '../../src/validators/IsTypeValidator'
+import { PropertyContainsValidTypeValidator } from '../../src/validators/PropertyContainsValidTypeValidator'
 import {
   InvalidTypeError,
   DoesNotContainPropertyError,
-} from '../../src/Validators/Error'
+} from '../../src/validators/Error'
 import { faker } from '../helpers'
 
-const filePath = 'src/Validators/PropertyContainsValidTypeValidator.js'
+const filePath = 'src/validators/PropertyContainsValidTypeValidator.js'
 
 describe(`class PropertyContainsValidTypeValidator (${filePath})`, () => {
   describe('(method) validate', () => {

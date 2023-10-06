@@ -1,7 +1,7 @@
-import { ReplacerBuilder } from '../src/FunctionsBuilder/Replacer/ReplacerBuilder'
+import { ReplacerBuilder } from '../src/functionsBuilder/replacer/ReplacerBuilder'
 import { getSerializer, faker } from './helpers'
 
-const filePath = 'src/FunctionBuilder/Replacer/ReplacerBuilder.js'
+const filePath = 'src/functionBuilder/replacer/ReplacerBuilder.js'
 
 const getReplacerBuilder = () => new ReplacerBuilder()
 
