@@ -1,6 +1,6 @@
-import { ReplacerBuilder } from '../JsonFunctionsBuilder/Replacer/ReplacerBuilder'
-import { ReviverBuilder } from '../JsonFunctionsBuilder/Reviver/ReviverBuilder'
-import { SerializerHandler } from '../SerializerHandler/SerializerHandler'
+import { ReplacerBuilder } from '../FunctionsBuilder/Replacer/ReplacerBuilder'
+import { ReviverBuilder } from '../FunctionsBuilder/Reviver/ReviverBuilder'
+import { SerializerHandler } from '../Serializers/Handler/SerializerHandler'
 
 /**
  * @callback replacer

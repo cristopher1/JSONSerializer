@@ -1,4 +1,4 @@
-import { Validator } from '../Validator/Validator'
+import { Validator } from '../Validator'
 
 export class ValidatorHandler {
   #validators
