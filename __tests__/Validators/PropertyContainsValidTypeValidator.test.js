@@ -4,7 +4,7 @@ import { PropertyContainsValidTypeValidator } from '../../src/Validators/Propert
 import { ValidatorError } from '../../src/Validators/Error'
 import { faker } from '../helpers'
 
-const filePath = 'src/Validator/PropertyContainsValidTypeValidator.js'
+const filePath = 'src/Validators/PropertyContainsValidTypeValidator.js'
 
 describe(`class PropertyContainsValidTypeValidator (${filePath})`, () => {
   describe('(method) validate', () => {

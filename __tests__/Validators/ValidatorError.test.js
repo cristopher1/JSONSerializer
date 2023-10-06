@@ -1,7 +1,7 @@
 import { ValidatorError } from '../../src/Validators/Error'
 import { faker } from '../helpers'
 
-const filePath = 'src/Validator/Error.js'
+const filePath = 'src/Validators/Error.js'
 
 describe(`class ValidatorError (${filePath})`, () => {
   describe('(property) name', () => {

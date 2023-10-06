@@ -2,7 +2,7 @@ import { ContainsPropertyValidator } from '../../src/Validators/ContainsProperty
 import { ValidatorError } from '../../src/Validators/Error'
 import { faker } from '../helpers'
 
-const filePath = 'src/Validator/ContainsPropertyValidator.js'
+const filePath = 'src/Validators/ContainsPropertyValidator.js'
 
 describe(`class ContainsPropertyValidator (${filePath})`, () => {
   describe('(method) getRequiredPropertyName', () => {

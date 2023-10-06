@@ -3,7 +3,7 @@ import { getSerializer, faker } from './helpers'
 
 /* eslint-disable no-eval */
 
-const filePath = 'src/JsonFunctionBuilder/Reviver/ReviverBuilder.js'
+const filePath = 'src/FunctionBuilder/Reviver/ReviverBuilder.js'
 
 const getReviverBuilder = () => new ReviverBuilder()
 

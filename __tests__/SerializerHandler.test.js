@@ -5,7 +5,7 @@ import { IsTypeValidator } from '../src/Validators/IsTypeValidator'
 import { ValidatorError } from '../src/Validators/Error'
 import { getSerializer, getSerializerHandler } from './helpers'
 
-const filePath = 'src/SerializerHandler/SerializerHandler.js'
+const filePath = 'src/Serializers/Handler/SerializerHandler.js'
 
 describe(`class SerializerHandler (${filePath})`, () => {
   describe('constructor', () => {
