@@ -1,7 +1,7 @@
 import { faker, getSerializer } from './helpers'
 import { ValidatorError } from '../src/validators/Error'
 import { JsonSerializer } from '../src/core/JsonSerializer'
-import { buildJsonSerializer } from '../src'
+import { JsonSerializerFactory } from '../src'
 
 class AirplaneTestClass {
   #model
@@ -85,22 +85,24 @@ class AirportTestClass {
 /* eslint-disable no-eval */
 const filePath = 'src/index.js'
 
-describe(`export function buildJsonSerializer (${filePath})`, () => {
-  it('Should return a JsonSerializer object', () => {
-    // Arrange
-    const expected = JsonSerializer
+describe(`export class Factory (${filePath})`, () => {
+  describe('(method) createJsonSerializer', () => {
+    it('Should return a JsonSerializer object', () => {
+      // Arrange
+      const expected = JsonSerializer
 
-    // Act
-    const result = buildJsonSerializer()
+      // Act
+      const result = JsonSerializerFactory.createJsonSerializer()
 
-    // Assert
-    expect(result).toBeInstanceOf(expected)
+      // Assert
+      expect(result).toBeInstanceOf(expected)
+    })
   })
   describe('class JsonSerializer', () => {
     let jsonSerializer
 
     beforeEach(() => {
-      jsonSerializer = buildJsonSerializer()
+      jsonSerializer = JsonSerializerFactory.createJsonSerializer()
     })
     describe('(method) installSerializersAndRefreshJsonSerializer', () => {
       it('Should throw a ValidatorError when some serializer is invalid', () => {
