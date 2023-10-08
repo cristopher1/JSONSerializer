@@ -13,7 +13,7 @@
       },
       "require": {
         "types": "./dist/types/index.d.cts",
-        "default": "./dist/cjs/index.js"
+        "default": "./dist/cjs/index.cjs"
       }
     }
   },
