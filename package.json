@@ -35,6 +35,7 @@
     "prebuild": "npm run lint:build-stage && npm run format:build-stage:fix && npm run build:clean",
     "build": "npm run build:tsc && npm run build:bundle && npm run build:clean-dist-tmp",
     "test": "jest --verbose",
+    "commitlint": "npx commitlint --edit",
     "quality-check": "npm run format && npm run lint && npm run test"
   },
   "repository": {
@@ -56,6 +57,8 @@
     "@babel/core": "^7.22.17",
     "@babel/plugin-transform-runtime": "^7.22.15",
     "@babel/preset-env": "^7.22.15",
+    "@commitlint/cli": "^17.7.2",
+    "@commitlint/config-conventional": "^17.7.0",
     "@faker-js/faker": "^8.1.0",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-node-resolve": "^15.2.1",
