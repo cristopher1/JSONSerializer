@@ -1,11 +1,9 @@
 # [JSONSerializer core](#indice)
 
-
-
 ### <a id="index"></a>Index
 
-* <a id="install"></a>[Install](#Install)
-* <a id="use"></a> [How to use?](#How-to-use)
+- <a id="install"></a>[Install](#Install)
+- <a id="use"></a> [How to use?](#How-to-use)
 
 ```json
 {
