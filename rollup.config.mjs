@@ -8,7 +8,7 @@ const getOutputFile = (basePath, { outputDir, name, extension }) => {
   return path.resolve(basePath, outputDir, `${name}.${extension}`)
 }
 
-// Extension Information
+// file information
 const CJS_FILE = {
   extension: 'cjs',
   format: 'cjs',
@@ -23,31 +23,27 @@ const MJS_FILE = {
   outputDir: 'esm',
   babelEnvName: 'buildESmodules',
 }
-const DCTS_FILE = {
-  extension: 'd.cts',
-  format: 'cjs',
-  name: 'index',
-  outputDir: 'types',
-}
-const DMTS_FILE = {
-  extension: 'd.mts',
+const DTS_FILE = {
+  extension: 'd.ts',
   format: 'es',
   name: 'index',
   outputDir: 'types',
 }
 
+// input files
 const INPUT_SRC_FILE = 'src/index.js'
 const INPUT_DTS_FILE = 'dist/tmp/types/index.d.ts'
 
-// Resolve import * as plugin from './plugins'
+// resolve import * as plugin from './plugins'
 const RESOLVE_IMPORT_ALL = 'resolveImportAll'
 
-// Unminified transpiler files
+// transpiled files
 const BASE_DIR = 'dist'
 const OUTPUT_CJS_FILE = getOutputFile(BASE_DIR, CJS_FILE)
 const OUTPUT_MJS_FILE = getOutputFile(BASE_DIR, MJS_FILE)
-const OUTPUT_DCTS_FILE = getOutputFile(BASE_DIR, DCTS_FILE)
-const OUTPUT_DMTS_FILE = getOutputFile(BASE_DIR, DMTS_FILE)
+
+// type declaration file
+const OUTPUT_DTS_FILE = getOutputFile(BASE_DIR, DTS_FILE)
 
 // getBabelOutputPlugin configuration
 const BABEL_CONFIG_FILE = path.resolve('.', 'babel.config.json')
@@ -89,12 +85,8 @@ export default defineConfig([
     input: INPUT_DTS_FILE,
     output: [
       {
-        file: OUTPUT_DCTS_FILE,
-        format: DCTS_FILE.format,
-      },
-      {
-        file: OUTPUT_DMTS_FILE,
-        format: DMTS_FILE.format,
+        file: OUTPUT_DTS_FILE,
+        format: DTS_FILE.format,
       },
     ],
     plugins: [dts()],
