@@ -4,17 +4,11 @@
   "description": "Wrapper to use JSON.parse and JSON.stringify",
   "main": "./dist/cjs/index.cjs",
   "type": "commonjs",
-  "types": "./dist/types/index.d.cts",
+  "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/types/index.d.mts",
-        "default": "./dist/esm/index.mjs"
-      },
-      "require": {
-        "types": "./dist/types/index.d.cts",
-        "default": "./dist/cjs/index.cjs"
-      }
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.cjs"
     }
   },
   "scripts": {
