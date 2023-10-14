@@ -11,6 +11,9 @@
       "require": "./dist/cjs/index.cjs"
     }
   },
+  "files": [
+    "./dist"
+  ],
   "scripts": {
     "init:documentation": "npx readme-md-generator -y",
     "init:husky": "husky install",
