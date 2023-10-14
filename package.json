@@ -1,5 +1,5 @@
 {
-  "name": "json-serializer-core",
+  "name": "@cljimenez/json-serializer-core",
   "version": "1.0.0",
   "description": "Wrapper to use JSON.parse and JSON.stringify",
   "main": "./dist/cjs/index.cjs",
