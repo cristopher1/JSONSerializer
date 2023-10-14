@@ -1,100 +1,51 @@
-# [JSONSerializer core](#indice)
+<h1 align="center">Welcome to json-serializer-core 👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
+  <a href="https://github.com/cristopher1/json-serializer#readme" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+  <a href="https://github.com/cristopher1/json-serializer/graphs/commit-activity" target="_blank">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
+  </a>
+  <a href="https://github.com/cristopher1/json-serializer/blob/master/LICENSE" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/github/license/cristopher1/json-serializer-core" />
+  </a>
+</p>
 
-### <a id="index"></a>Index
+> Wrapper to use JSON.parse and JSON.stringify
 
-- <a id="install"></a>[Install](#Install)
-- <a id="use"></a> [How to use?](#How-to-use)
+### 🏠 [Homepage](https://github.com/cristopher1/json-serializer#readme)
 
-```json
-{
-  "__typeof__": "AirportTestClass",
-  "value": {
-    "transportVehicles": [
-      {
-        "__typeof__": "TransportVehicleTestClass",
-        "value": {
-          "wheels": [
-            {
-              "__typeof__": "WheelTestClass",
-              "value": { "duration": 1987494138609664 }
-            },
-            {
-              "__typeof__": "WheelTestClass",
-              "value": { "duration": 1819535013314560 }
-            },
-            {
-              "__typeof__": "WheelTestClass",
-              "value": { "duration": 6535380662747136 }
-            }
-          ]
-        }
-      },
-      {
-        "__typeof__": "TransportVehicleTestClass",
-        "value": {
-          "wheels": [
-            {
-              "__typeof__": "WheelTestClass",
-              "value": { "duration": 5250420016414720 }
-            },
-            {
-              "__typeof__": "WheelTestClass",
-              "value": { "duration": 7651029791277056 }
-            },
-            {
-              "__typeof__": "WheelTestClass",
-              "value": { "duration": 7619204396089344 }
-            },
-            {
-              "__typeof__": "WheelTestClass",
-              "value": { "duration": 8366722742484992 }
-            }
-          ]
-        }
-      },
-      {
-        "__typeof__": "TransportVehicleTestClass",
-        "value": {
-          "wheels": [
-            {
-              "__typeof__": "WheelTestClass",
-              "value": { "duration": 8390044339404800 }
-            },
-            {
-              "__typeof__": "WheelTestClass",
-              "value": { "duration": 6628758633054208 }
-            },
-            {
-              "__typeof__": "WheelTestClass",
-              "value": { "duration": 493054882480128 }
-            },
-            {
-              "__typeof__": "WheelTestClass",
-              "value": { "duration": 4292716229820416 }
-            },
-            {
-              "__typeof__": "WheelTestClass",
-              "value": { "duration": 5818243356819456 }
-            }
-          ]
-        }
-      }
-    ],
-    "airplanes": [
-      {
-        "__typeof__": "AirplaneTestClass",
-        "value": { "model": "N\"X,(e+4zs" }
-      },
-      {
-        "__typeof__": "AirplaneTestClass",
-        "value": { "model": "WP)<\"fn]vK" }
-      },
-      { "__typeof__": "AirplaneTestClass", "value": { "model": "b)D9bWv_;m" } },
-      { "__typeof__": "AirplaneTestClass", "value": { "model": "`YQ4r|v9N(" } },
-      { "__typeof__": "AirplaneTestClass", "value": { "model": "XN9r}G4ZWv" } },
-      { "__typeof__": "AirplaneTestClass", "value": { "model": "]-u*,}_Ggp" } },
-      { "__typeof__": "AirplaneTestClass", "value": { "model": "uY7o{p=Xt&" } }
-    ]
-  }
-}
+## Install
+
+```sh
+npm install
 ```
+
+## Run tests
+
+```sh
+npm run test
+```
+
+## Author
+
+👤 **Cristopher Jiménez**
+
+* Github: [@cristopher1](https://github.com/cristopher1)
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/cristopher1/json-serializer/issues). You can also take a look at the [contributing guide](https://github.com/cristopher1/json-serializer/blob/master/CONTRIBUTING.md).
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+## 📝 License
+
+Copyright © 2023 [Cristopher Jiménez](https://github.com/cristopher1).<br />
+This project is [MIT](https://github.com/cristopher1/json-serializer/blob/master/LICENSE) licensed.
+
+***
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
