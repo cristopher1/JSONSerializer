@@ -1,7 +1,7 @@
 {
   "name": "@cljimenez/json-serializer-core",
   "version": "1.0.0",
-  "description": "Wrapper to use JSON.parse and JSON.stringify",
+  "description": "Wrapper to use JSON.parse and JSON.stringify methods, based on serializers",
   "main": "./dist/cjs/index.cjs",
   "type": "commonjs",
   "types": "./dist/types/index.d.ts",
