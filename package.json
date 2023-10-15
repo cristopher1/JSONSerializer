@@ -44,7 +44,14 @@
   },
   "keywords": [
     "serializer",
-    "JSON"
+    "JSON",
+    "JSON.parse",
+    "JSON.stringify",
+    "serialize",
+    "unserialize",
+    "wrapper",
+    "json-serializer",
+    "core"
   ],
   "author": "Cristopher Jiménez",
   "license": "MIT",
