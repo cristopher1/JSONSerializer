@@ -248,13 +248,13 @@ const dateSerializer = {
       jsonSerializer.installSerializersAndRefreshJsonSerializer(installer)
 
      /*
-         {
-          bigint: {
-            getSerializerType: [Function: getSerializerType],
-            serialize: [Function: serialize],
-            parse: [Function: parse]
-          }
-        }
+       {
+         bigint: {
+           getSerializerType: [Function: getSerializerType],
+           serialize: [Function: serialize],
+           parse: [Function: parse]
+         }
+       }
       */
       console.log(jsonSerializer.getSerializers())
 
