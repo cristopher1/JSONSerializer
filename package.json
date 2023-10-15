@@ -40,7 +40,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cristopher1/json-serializer.git"
+    "url": "git+https://github.com/cristopher1/json-serializer-core.git"
   },
   "keywords": [
     "serializer",
@@ -56,9 +56,9 @@
   "author": "Cristopher Jiménez",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cristopher1/json-serializer/issues"
+    "url": "https://github.com/cristopher1/json-serializer-core/issues"
   },
-  "homepage": "https://github.com/cristopher1/json-serializer#readme",
+  "homepage": "https://github.com/cristopher1/json-serialize-corer#readme",
   "devDependencies": {
     "@babel/cli": "^7.22.15",
     "@babel/core": "^7.22.17",
