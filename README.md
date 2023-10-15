@@ -159,10 +159,10 @@ const dateSerializer = {
 
 ## <a id="how-to-use?"></a> How to use?
 
-### <a id="obtain-json-serializer-object"></a> Obtain the JsonSerializer object
+* ### <a id="obtain-json-serializer-object"></a> Obtain the JsonSerializer object
 
   **The `@cljimenez/json-serializer-core` package contains a class `JsonSerializerFactory` that is used to obtain a new `JsonSerializer` object**.
-  
+      
   Example for commonjs:
   
   ```js
@@ -177,7 +177,7 @@ const dateSerializer = {
   const jsonSerializer = JsonSerializerFactory.createJsonSerializer()
   ```
 
-### <a id="about-json-serializer-methods"></a> About the JsonSerializer methods
+* ### <a id="about-json-serializer-methods"></a> About the JsonSerializer methods
   The `JsonSerializer` object is a wrapper to use the methods JSON.stringify and JSON.parse with the replacer and reviver parameters. The `JsonSerializer` object contains five methods:
   
   1. <a id="get-serializer-type"></a> **getSerializers(void) => object**: Returns an object literal that contains all serializers added to the JsonSerializer object.
@@ -207,45 +207,78 @@ const dateSerializer = {
   
      ```js
      // serializerInstaller
-     const installer = {
-       install: (serializerHandler, installOptions) => {
-         const options = {
-           excludeSetSerializer: true,
-           ...installOptions
-         }
+      const installer = {
+        install: (serializerHandler, installOptions) => {
+          const options = {
+            excludeSetSerializer: true,
+            ...installOptions,
+          };
+
+          const bigIntSerializer = {
+            getSerializerType: () => "bigint",
+            serialize: (unserializedData) => ({
+              value: unserializedData.toString(),
+            }),
+            parse: (serializedData) => {
+              const { value } = serializedData
+              return BigInt(value)
+            },
+          }
+
+          const setSerializer = {
+            getSerializerType: () => "Set",
+            serialize: (unserializedData) => ({
+              value: Array.from(unserializedData),
+            }),
+            parse: (serializedData) => {
+              const { value } = serializedData
+              return new Set(value)
+            },
+          }
+
+          serializerHandler.addSerializer(bigIntSerializer)
+          if (!options.excludeSetSerializer) {
+            serializerHandler.addSerializer(setSerializer)
+          }
+        },
+      }
+
+      // without using the installOptions parameter
+      const jsonSerializer = JsonSerializerFactory.createJsonSerializer()
+      jsonSerializer.installSerializersAndRefreshJsonSerializer(installer)
+
+     /*
+         {
+          bigint: {
+            getSerializerType: [Function: getSerializerType],
+            serialize: [Function: serialize],
+            parse: [Function: parse]
+          }
+        }
+      */
+      console.log(jsonSerializer.getSerializers())
+
+      // using the installOptions parameter
+      const newJsonSerializer = JsonSerializerFactory.createJsonSerializer()
+      newJsonSerializer.installSerializersAndRefreshJsonSerializer(installer, {
+        excludeSetSerializer: false,
+      })
      
-         const bigIntSerializer = {
-           getSerializerType: () => 'bigint',
-           serialize: (unserializedData) => ({ value: unserializedData.toString() }),
-           parse: (serializedData) => {
-             const { value } = serializedData
-             return BigInt(value)
-           } 
-         }
-  
-         const setSerializer = {
-           getSerializerType: () => 'Set',
-           serialize: (unserializedData) => ({ value: Array.from(unserializedData) }),
-           parse: (serializedData) => {
-             const { value } = serializedData
-             return new Set(value)
-           }
-         }
-   
-         serializerHandler.addSerializer(bigIntSerializer)
-         if (!excludeSetSerializer) {
-           serializerHandler.addSerializer(setSerializer)
-         }      
-       }
-     }
-  
-     // without using the installOptions parameter
-     const jsonSerializer = JsonSerializerFactory.createJsonSerializer()
-     jsonSerializer.installSerializersAndRefreshJsonSerializer(installer)
-  
-     // using the installOptions parameter
-     const newJsonSerializer = JsonSerializerFactory.createJsonSerializer()
-     newjsonSerializer.installSerializersAndRefreshJsonSerializer(installer, { excludeSetSerializer: false })
+      /*
+        {                                                                                                                                         
+          bigint: {
+            getSerializerType: [Function: getSerializerType],
+            serialize: [Function: serialize],
+            parse: [Function: parse]
+          },
+          Set: {
+            getSerializerType: [Function: getSerializerType],
+            serialize: [Function: serialize],
+            parse: [Function: parse]
+          }
+        }
+       */
+      console.log(newJsonSerializer.getSerializers())
      ```
   3. <a id="add-serializer"></a> **addSerializerAndRefreshJsonSerializer(serializer: Serializer) => void**: Adds a serializer, if a serializer already exists by a specific data type (both getSerializerType methods returns the same value), this serializer will be override.
   
@@ -298,7 +331,7 @@ const dateSerializer = {
   
      const jsonSerializer = JsonSerializerFactory.createJsonSerializer()
   
-     jsonSerializer.addSerializer(bigIntSerializer)
+     jsonSerializer.addSerializerAndRefreshJsonSerializer(bigIntSerializer)
   
      // {"__typeof__":"bigint","value":"20000"}
      console.log(jsonSerializer.serialize(bigInt))
@@ -319,384 +352,386 @@ const dateSerializer = {
   
      ```js
      const bigIntSerializer = {
-       getSerializerType: () => 'bigint',
-       serialize: (unserializedData) => ({ value: unserializedData.toString() }),
-       parse: (serializedData) => {
-         const { value } = serializedData
-         return BigInt(value)
-       } 
-     }
-  
-     const bigInt = BigInt(20000)
-  
-     const jsonSerializer = JsonSerializerFactory.createJsonSerializer()
-  
-     jsonSerializer.addSerializer(bigIntSerializer)
-  
-     const serializedData = jsonSerializer.serialize(bigInt)
-  
-     // {"__typeof__":"bigint","value":"20000"}
-     console.log(serializedData)
-  
-     // string
-     console.log(typeof serializedData)
-  
-     const unserializedData = jsonSerializer.parse(serializedData)
-  
-     // 20000n
-     console.log(unserializedData)
-  
-     // bigint
-     console.log(typeof unserializedData)
+        getSerializerType: () => "bigint",
+        serialize: (unserializedData) => ({
+          value: unserializedData.toString(),
+        }),
+        parse: (serializedData) => {
+          const { value } = serializedData
+          return BigInt(value)
+        },
+      };
+
+      const bigInt = BigInt(20000)
+
+      const jsonSerializer = JsonSerializerFactory.createJsonSerializer()
+
+      jsonSerializer.addSerializerAndRefreshJsonSerializer(bigIntSerializer)
+
+      const serializedData = jsonSerializer.serialize(bigInt)
+
+      // {"__typeof__":"bigint","value":"20000"}
+      console.log(serializedData)
+
+      // string
+      console.log(typeof serializedData)
+
+      const unserializedData = jsonSerializer.parse(serializedData)
+
+      // 20000n
+      console.log(unserializedData)
+
+      // bigint
+      console.log(typeof unserializedData)
      ```
 
-## <a id="complex-object-with-new-operator"></a> Serializes and unserializes complex object that contains objects created by the new operator.
+* ### <a id="complex-object-with-new-operator"></a> Serializes and unserializes complex object that contains objects created by the new operator.
 
-When you creates an object using the **`new`** operator, it is necessary to add to the class some method that returns an object literal representation, for example:
-
-  ```js
-  class MyOwnClass {
-    constructor (element1, element2) {
-      this.element1 = element1
-      this.elemenet2 = element2
-    }
-
-    // It is not necessary to call this method same toObjectLiteral, it can have other name.
-    toObjectLiteral() {
-      return {
-        element1: this.element1,
-        element2: this.element2
+  When you creates an object using the **`new`** operator, it is necessary to add to the class some method that returns an object literal representation, for example:
+  
+    ```js
+    class MyOwnClass {
+      constructor (element1, element2) {
+        this.element1 = element1
+        this.element2 = element2
       }
-    }
-  }
-  ```
-
-The object literal must have all elements to recreate the original object.
-
-**Note: It is possible that you needs to use Object.values() or other methods into parse method, when you recreates the original object using destructuring data (...data). See the parse method in the following example.**
-
-An Example for this case from the tests using in the json-serializer-core repository:
-
-  ```js
-  class AirplaneTestClass {
-    #model
   
-    constructor(model) {
-      this.#model = model
-    }
-  
-    getModel() {
-      return this.#model
-    }
-  
-    getObjectLiteral() {
-      return {
-        model: this.#model,
-      }
-    }
-  }
-  
-  class WheelTestClass {
-    #duration
-  
-    constructor(duration) {
-      this.#duration = duration
-    }
-  
-    getDuration() {
-      return this.#duration
-    }
-  
-    getObjectLiteral() {
-      return {
-        duration: this.#duration,
-      }
-    }
-  }
-  
-  class TransportVehicleTestClass {
-    #wheels
-  
-    constructor(wheels) {
-      this.#wheels = wheels
-    }
-  
-    getWheels() {
-      return [...this.#wheels]
-    }
-  
-    getObjectLiteral() {
-      return {
-        wheels: this.#wheels,
-      }
-    }
-  }
-  
-  class AirportTestClass {
-    #transportVehicles
-    #airplanes
-  
-    constructor(transportVehicles, airplanes) {
-      this.#transportVehicles = transportVehicles
-      this.#airplanes = airplanes
-    }
-  
-    getTransportVehicles() {
-      return [...this.#transportVehicles]
-    }
-  
-    getAirplanes() {
-      return [...this.#airplanes]
-    }
-  
-    getObjectLiteral() {
-      return {
-        transportVehicles: this.#transportVehicles,
-        airplanes: this.#airplanes,
-      }
-    }
-  }
-  
-  const transportVehicles = [
-    new TransportVehicleTestClass([
-      new WheelTestClass(faker.number.int()),
-      new WheelTestClass(faker.number.int()),
-      new WheelTestClass(faker.number.int()),
-    ]),
-    new TransportVehicleTestClass([
-      new WheelTestClass(faker.number.int()),
-      new WheelTestClass(faker.number.int()),
-      new WheelTestClass(faker.number.int()),
-      new WheelTestClass(faker.number.int()),
-    ]),
-    new TransportVehicleTestClass([
-      new WheelTestClass(faker.number.int()),
-      new WheelTestClass(faker.number.int()),
-      new WheelTestClass(faker.number.int()),
-      new WheelTestClass(faker.number.int()),
-      new WheelTestClass(faker.number.int()),
-    ]),
-  ]
-  
-  const airplanes = [
-    new AirplaneTestClass(faker.string.sample()),
-    new AirplaneTestClass(faker.string.sample()),
-    new AirplaneTestClass(faker.string.sample()),
-    new AirplaneTestClass(faker.string.sample()),
-    new AirplaneTestClass(faker.string.sample()),
-    new AirplaneTestClass(faker.string.sample()),
-    new AirplaneTestClass(faker.string.sample()),
-  ]
-  
-  const unserializedData = new AirportTestClass(
-    transportVehicles,
-    airplanes,
-  )
-
-  const airportTestClassSerializer = getSerializer(
-    () => 'AirportTestClass',
-    (unserializerData) => ({
-      value: unserializerData.getObjectLiteral(),
-    }),
-    (serializedData) => {
-      const { value } = serializedData
-      const parameters = Object.values(value)
-      return new AirportTestClass(...parameters)
-    },
-  )
-
-  const airplaneTestClassSerializer = getSerializer(
-    () => 'AirplaneTestClass',
-    (unserializerData) => ({
-      value: unserializerData.getObjectLiteral(),
-    }),
-    (serializedData) => {
-      const { value } = serializedData
-      const parameters = Object.values(value)
-      return new AirplaneTestClass(...parameters)
-    },
-  )
-
-  const transportVehicleTestClassSerializer = getSerializer(
-    () => 'TransportVehicleTestClass',
-    (unserializerData) => ({
-      value: unserializerData.getObjectLiteral(),
-    }),
-    (serializedData) => {
-      const { value } = serializedData
-      const parameters = Object.values(value)
-      return new TransportVehicleTestClass(...parameters)
-    },
-  )
-
-  const wheelTestClassSerializer = getSerializer(
-    () => 'WheelTestClass',
-    (unserializerData) => ({
-      value: unserializerData.getObjectLiteral(),
-    }),
-    (serializedData) => {
-      const { value } = serializedData
-      const parameters = Object.values(value)
-      return new WheelTestClass(...parameters)
-    },
-  )
-
-  jsonSerializer.addSerializerAndRefreshJsonSerializer(
-    airportTestClassSerializer,
-  )
-  jsonSerializer.addSerializerAndRefreshJsonSerializer(
-    airplaneTestClassSerializer,
-  )
-  jsonSerializer.addSerializerAndRefreshJsonSerializer(
-    transportVehicleTestClassSerializer,
-  )
-  jsonSerializer.addSerializerAndRefreshJsonSerializer(
-    wheelTestClassSerializer,
-  )
-
-  const serializedData = jsonSerializer.serialize(unserializedData)
-  ```
-
-  **For this case, the jsonSerializer.serialize(unserializedData) method returns the following JSON string**:
-
-  ```json
-  {
-    "__typeof__": "AirportTestClass",
-    "value": {
-      "transportVehicles": [
-        {
-          "__typeof__": "TransportVehicleTestClass",
-          "value": {
-            "wheels": [
-              {
-                "__typeof__": "WheelTestClass",
-                "value": { "duration": 1987494138609664 }
-              },
-              {
-                "__typeof__": "WheelTestClass",
-                "value": { "duration": 1819535013314560 }
-              },
-              {
-                "__typeof__": "WheelTestClass",
-                "value": { "duration": 6535380662747136 }
-              }
-            ]
-          }
-        },
-        {
-          "__typeof__": "TransportVehicleTestClass",
-          "value": {
-            "wheels": [
-              {
-                "__typeof__": "WheelTestClass",
-                "value": { "duration": 5250420016414720 }
-              },
-              {
-                "__typeof__": "WheelTestClass",
-                "value": { "duration": 7651029791277056 }
-              },
-              {
-                "__typeof__": "WheelTestClass",
-                "value": { "duration": 7619204396089344 }
-              },
-              {
-                "__typeof__": "WheelTestClass",
-                "value": { "duration": 8366722742484992 }
-              }
-            ]
-          }
-        },
-        {
-          "__typeof__": "TransportVehicleTestClass",
-          "value": {
-            "wheels": [
-              {
-                "__typeof__": "WheelTestClass",
-                "value": { "duration": 8390044339404800 }
-              },
-              {
-                "__typeof__": "WheelTestClass",
-                "value": { "duration": 6628758633054208 }
-              },
-              {
-                "__typeof__": "WheelTestClass",
-                "value": { "duration": 493054882480128 }
-              },
-              {
-                "__typeof__": "WheelTestClass",
-                "value": { "duration": 4292716229820416 }
-              },
-              {
-                "__typeof__": "WheelTestClass",
-                "value": { "duration": 5818243356819456 }
-              }
-            ]
-          }
+      // It is not necessary to call this method same toObjectLiteral, it can have other name.
+      toObjectLiteral() {
+        return {
+          element1: this.element1,
+          element2: this.element2
         }
-      ],
-      "airplanes": [
-        {
-          "__typeof__": "AirplaneTestClass",
-          "value": { "model": "N\"X,(e+4zs" }
-        },
-        {
-          "__typeof__": "AirplaneTestClass",
-          "value": { "model": "WP)<\"fn]vK" }
-        },
-        {
-          "__typeof__": "AirplaneTestClass",
-          "value": { "model": "b)D9bWv_;m" }
-        },
-        {
-          "__typeof__": "AirplaneTestClass",
-          "value": { "model": "`YQ4r|v9N(" }
-        },
-        {
-          "__typeof__": "AirplaneTestClass",
-          "value": { "model": "XN9r}G4ZWv" }
-        },
-        {
-          "__typeof__": "AirplaneTestClass",
-          "value": { "model": "]-u*,}_Ggp" }
-        },
-        {
-          "__typeof__": "AirplaneTestClass",
-          "value": { "model": "uY7o{p=Xt&" }
-        }
-      ]
+      }
     }
-  }
-  ```
-
-  You can use the parse method to unserialize the serialized data.
-
-  ```js
-    const result = json.parse(serializedData)
-
-    /*
-     Returns all Airplanes
-     [
-      AirplaneTestClass {},
-      AirplaneTestClass {},
-      AirplaneTestClass {},
-      AirplaneTestClass {},
-      AirplaneTestClass {},
-      AirplaneTestClass {},
-      AirplaneTestClass {}
+    ```
+  
+  The object literal must have all elements to recreate the original object.
+  
+  **Note: It is possible that you needs to use Object.values() or other methods into parse method, when you recreates the original object using destructuring data (...data). See the parse method in the following example.**
+  
+  An Example for this case from the tests using in the json-serializer-core repository:
+  
+    ```js
+    class AirplaneTestClass {
+      #model
+    
+      constructor(model) {
+        this.#model = model
+      }
+    
+      getModel() {
+        return this.#model
+      }
+    
+      getObjectLiteral() {
+        return {
+          model: this.#model,
+        }
+      }
+    }
+    
+    class WheelTestClass {
+      #duration
+    
+      constructor(duration) {
+        this.#duration = duration
+      }
+    
+      getDuration() {
+        return this.#duration
+      }
+    
+      getObjectLiteral() {
+        return {
+          duration: this.#duration,
+        }
+      }
+    }
+    
+    class TransportVehicleTestClass {
+      #wheels
+    
+      constructor(wheels) {
+        this.#wheels = wheels
+      }
+    
+      getWheels() {
+        return [...this.#wheels]
+      }
+    
+      getObjectLiteral() {
+        return {
+          wheels: this.#wheels,
+        }
+      }
+    }
+    
+    class AirportTestClass {
+      #transportVehicles
+      #airplanes
+    
+      constructor(transportVehicles, airplanes) {
+        this.#transportVehicles = transportVehicles
+        this.#airplanes = airplanes
+      }
+    
+      getTransportVehicles() {
+        return [...this.#transportVehicles]
+      }
+    
+      getAirplanes() {
+        return [...this.#airplanes]
+      }
+    
+      getObjectLiteral() {
+        return {
+          transportVehicles: this.#transportVehicles,
+          airplanes: this.#airplanes,
+        }
+      }
+    }
+    
+    const transportVehicles = [
+      new TransportVehicleTestClass([
+        new WheelTestClass(faker.number.int()),
+        new WheelTestClass(faker.number.int()),
+        new WheelTestClass(faker.number.int()),
+      ]),
+      new TransportVehicleTestClass([
+        new WheelTestClass(faker.number.int()),
+        new WheelTestClass(faker.number.int()),
+        new WheelTestClass(faker.number.int()),
+        new WheelTestClass(faker.number.int()),
+      ]),
+      new TransportVehicleTestClass([
+        new WheelTestClass(faker.number.int()),
+        new WheelTestClass(faker.number.int()),
+        new WheelTestClass(faker.number.int()),
+        new WheelTestClass(faker.number.int()),
+        new WheelTestClass(faker.number.int()),
+      ]),
     ]
-    */
-    console.log(result.getAirplanes())
-
-    /*
-     Returns all TransportVehicles
-     [                                                                                                                                              
-      TransportVehicleTestClass {},                                                                                                                
-      TransportVehicleTestClass {},                                                                                                                
-      TransportVehicleTestClass {}                                                                                                                 
-     ] 
-    */
-    console.log(result.getTransportVehicles())
-  ```
+    
+    const airplanes = [
+      new AirplaneTestClass(faker.string.sample()),
+      new AirplaneTestClass(faker.string.sample()),
+      new AirplaneTestClass(faker.string.sample()),
+      new AirplaneTestClass(faker.string.sample()),
+      new AirplaneTestClass(faker.string.sample()),
+      new AirplaneTestClass(faker.string.sample()),
+      new AirplaneTestClass(faker.string.sample()),
+    ]
+    
+    const unserializedData = new AirportTestClass(
+      transportVehicles,
+      airplanes,
+    )
+  
+    const airportTestClassSerializer = getSerializer(
+      () => 'AirportTestClass',
+      (unserializerData) => ({
+        value: unserializerData.getObjectLiteral(),
+      }),
+      (serializedData) => {
+        const { value } = serializedData
+        const parameters = Object.values(value)
+        return new AirportTestClass(...parameters)
+      },
+    )
+  
+    const airplaneTestClassSerializer = getSerializer(
+      () => 'AirplaneTestClass',
+      (unserializerData) => ({
+        value: unserializerData.getObjectLiteral(),
+      }),
+      (serializedData) => {
+        const { value } = serializedData
+        const parameters = Object.values(value)
+        return new AirplaneTestClass(...parameters)
+      },
+    )
+  
+    const transportVehicleTestClassSerializer = getSerializer(
+      () => 'TransportVehicleTestClass',
+      (unserializerData) => ({
+        value: unserializerData.getObjectLiteral(),
+      }),
+      (serializedData) => {
+        const { value } = serializedData
+        const parameters = Object.values(value)
+        return new TransportVehicleTestClass(...parameters)
+      },
+    )
+  
+    const wheelTestClassSerializer = getSerializer(
+      () => 'WheelTestClass',
+      (unserializerData) => ({
+        value: unserializerData.getObjectLiteral(),
+      }),
+      (serializedData) => {
+        const { value } = serializedData
+        const parameters = Object.values(value)
+        return new WheelTestClass(...parameters)
+      },
+    )
+  
+    jsonSerializer.addSerializerAndRefreshJsonSerializer(
+      airportTestClassSerializer,
+    )
+    jsonSerializer.addSerializerAndRefreshJsonSerializer(
+      airplaneTestClassSerializer,
+    )
+    jsonSerializer.addSerializerAndRefreshJsonSerializer(
+      transportVehicleTestClassSerializer,
+    )
+    jsonSerializer.addSerializerAndRefreshJsonSerializer(
+      wheelTestClassSerializer,
+    )
+  
+    const serializedData = jsonSerializer.serialize(unserializedData)
+    ```
+  
+    **For this case, the jsonSerializer.serialize(unserializedData) method returns the following JSON string**:
+  
+    ```json
+    {
+      "__typeof__": "AirportTestClass",
+      "value": {
+        "transportVehicles": [
+          {
+            "__typeof__": "TransportVehicleTestClass",
+            "value": {
+              "wheels": [
+                {
+                  "__typeof__": "WheelTestClass",
+                  "value": { "duration": 1987494138609664 }
+                },
+                {
+                  "__typeof__": "WheelTestClass",
+                  "value": { "duration": 1819535013314560 }
+                },
+                {
+                  "__typeof__": "WheelTestClass",
+                  "value": { "duration": 6535380662747136 }
+                }
+              ]
+            }
+          },
+          {
+            "__typeof__": "TransportVehicleTestClass",
+            "value": {
+              "wheels": [
+                {
+                  "__typeof__": "WheelTestClass",
+                  "value": { "duration": 5250420016414720 }
+                },
+                {
+                  "__typeof__": "WheelTestClass",
+                  "value": { "duration": 7651029791277056 }
+                },
+                {
+                  "__typeof__": "WheelTestClass",
+                  "value": { "duration": 7619204396089344 }
+                },
+                {
+                  "__typeof__": "WheelTestClass",
+                  "value": { "duration": 8366722742484992 }
+                }
+              ]
+            }
+          },
+          {
+            "__typeof__": "TransportVehicleTestClass",
+            "value": {
+              "wheels": [
+                {
+                  "__typeof__": "WheelTestClass",
+                  "value": { "duration": 8390044339404800 }
+                },
+                {
+                  "__typeof__": "WheelTestClass",
+                  "value": { "duration": 6628758633054208 }
+                },
+                {
+                  "__typeof__": "WheelTestClass",
+                  "value": { "duration": 493054882480128 }
+                },
+                {
+                  "__typeof__": "WheelTestClass",
+                  "value": { "duration": 4292716229820416 }
+                },
+                {
+                  "__typeof__": "WheelTestClass",
+                  "value": { "duration": 5818243356819456 }
+                }
+              ]
+            }
+          }
+        ],
+        "airplanes": [
+          {
+            "__typeof__": "AirplaneTestClass",
+            "value": { "model": "N\"X,(e+4zs" }
+          },
+          {
+            "__typeof__": "AirplaneTestClass",
+            "value": { "model": "WP)<\"fn]vK" }
+          },
+          {
+            "__typeof__": "AirplaneTestClass",
+            "value": { "model": "b)D9bWv_;m" }
+          },
+          {
+            "__typeof__": "AirplaneTestClass",
+            "value": { "model": "`YQ4r|v9N(" }
+          },
+          {
+            "__typeof__": "AirplaneTestClass",
+            "value": { "model": "XN9r}G4ZWv" }
+          },
+          {
+            "__typeof__": "AirplaneTestClass",
+            "value": { "model": "]-u*,}_Ggp" }
+          },
+          {
+            "__typeof__": "AirplaneTestClass",
+            "value": { "model": "uY7o{p=Xt&" }
+          }
+        ]
+      }
+    }
+    ```
+  
+    You can use the parse method to unserialize the serialized data.
+  
+    ```js
+      const result = json.parse(serializedData)
+  
+      /*
+       Returns all Airplanes
+       [
+        AirplaneTestClass {},
+        AirplaneTestClass {},
+        AirplaneTestClass {},
+        AirplaneTestClass {},
+        AirplaneTestClass {},
+        AirplaneTestClass {},
+        AirplaneTestClass {}
+      ]
+      */
+      console.log(result.getAirplanes())
+  
+      /*
+       Returns all TransportVehicles
+       [                                                                                                                                              
+        TransportVehicleTestClass {},                                                                                                                
+        TransportVehicleTestClass {},                                                                                                                
+        TransportVehicleTestClass {}                                                                                                                 
+       ] 
+      */
+      console.log(result.getTransportVehicles())
+    ```
 
 ## <a id="author"></a> Author
 
