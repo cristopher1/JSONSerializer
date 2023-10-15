@@ -35,8 +35,8 @@ export class SerializerHandler {
    *   data.
    * @param {() => string} serializer.getSerializerType An function that return
    *   the type of serializer.
-   * @param {(unserializedData: any) => object | string} serializer.serialize
-   *   An function that serialize data.
+   * @param {(unserializedData: any) => object} serializer.serialize An function
+   *   that serialize data.
    * @param {(serializedData: string) => any} serializer.parse An function that
    *   unserialize data.
    */
@@ -54,8 +54,8 @@ export class SerializerHandler {
    *   data.
    * @param {() => string} serializer.getSerializerType An function that return
    *   the type of Serializer.
-   * @param {(unserializedData: any) => object | string} serializer.serialize
-   *   An function that serialize data.
+   * @param {(unserializedData: any) => object} serializer.serialize An function
+   *   that serialize data.
    * @param {(serializedData: string) => any} serializer.parse An function that
    *   unserialize data.
    */
