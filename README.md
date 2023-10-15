@@ -36,7 +36,7 @@
 ## <a id="install"></a> Install
 
 ```sh
-npm install /json-serializer-core
+npm install @cljimenez/json-serializer-core
 ```
 
 **If you want to use some base serializers, you can install [@cljimenez/json-serializer-base-serializers](https://www.npmjs.com/package/@cljimenez/json-serializer-base-serializers?activeTab=readme) using:**
