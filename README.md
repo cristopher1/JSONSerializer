@@ -39,11 +39,7 @@
 npm install @cljimenez/json-serializer-core
 ```
 
-**If you want to use some base serializers, you can install [@cljimenez/json-serializer-base-serializers](https://www.npmjs.com/package/@cljimenez/json-serializer-base-serializers?activeTab=readme) using:**
-
-```sh
-npm install @cljimenez/json-serializer-base-serializers
-```
+**If you want to use some base serializers, you can use [@cljimenez/json-serializer-base-serializers](https://www.npmjs.com/package/@cljimenez/json-serializer-base-serializers?activeTab=readme)**
 
 ## <a id="what-is-a-serializer?"></a> What is a Serializer?
 
@@ -314,7 +310,7 @@ const dateSerializer = {
      // adds a Serializer
      jsonSerializer.addSerializerAndRefreshJsonSerializer(bigIntSerializer)
 
-     // overrides a Serializer. How both serializers serializes bigInt (its getSerializerType methods returns the same value), the first serializer is overrides for the second.
+     // overrides a Serializer. How both serializers serializes bigInt (its getSerializerType methods returns the same value), the second serializer overrides the first serializer.
      const newBigIntSerializer = {
        getSerializerType: () => 'bigint',
        serialize: (unserializedData) => ({
@@ -428,9 +424,19 @@ const dateSerializer = {
 
   **Note: It is possible that you needs to use Object.values() or other methods into parse method, when you recreates the original object using destructuring data (...data). See the parse method in the following example.**
 
-  An Example for this case from the tests using in the json-serializer-core repository:
+  An Example for this case, it is the tests used in the json-serializer-core repository:
 
   ```js
+  export const getSerializer = (
+    getSerializerTypeFunc,
+    serializeFunc,
+    parseFunc,
+  ) => ({
+    getSerializerType: getSerializerTypeFunc,
+    serialize: serializeFunc,
+    parse: parseFunc,
+  })
+  
   class AirplaneTestClass {
     #model
 
