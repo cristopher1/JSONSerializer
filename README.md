@@ -436,7 +436,7 @@ const dateSerializer = {
     serialize: serializeFunc,
     parse: parseFunc,
   })
-  
+
   class AirplaneTestClass {
     #model
 
